@@ -2,10 +2,10 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">
+    <div className="">
       <header className="App-header">
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Edit <code>src/App.js</code> and save to .
         </p>
         <a
           className="App-link"
