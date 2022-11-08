@@ -37,6 +37,32 @@ router.post('/', function(request, response) {
     }
 );
 
+router.post('/signup', function(request, response) {
+if(request.body.fullname && request.body.username && request.body.password && request.body.age){
+    console.log("here")
+    login.adduser(request.body.fullname, request.body.password, request.body.username, request.body.age, function(dbError, dbresult){
+        if (dbError){
+            response.send('error')
+        }
+        else {
+            login.getUserID(request.body.username, function(dberr,dbresult) {
+                if(dberr) {
+                    response.send("err")
+                }else {
+                    const token = generateAccessToken({ username: request.body.username });
+                    const returnobj = {
+                        token: token,
+                        fullname: request.body.fullname,
+                        idUsers: dbresult[0].idUsers,
+                        username: request.body.username
+                    }
+                    response.send(returnobj)
+                }
+            })
+        }
+    })
+}
+})
 
 function generateAccessToken(username) {
     dotenv.config();
