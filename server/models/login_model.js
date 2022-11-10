@@ -13,6 +13,9 @@ const login = {
   getUserID: function (username, callback) {
     return db.query('SELECT idUsers FROM Users WHERE userName = ?', [username], callback);
   },
+  deleteuser: function(username, callback) {
+    return db.query('DELETE FROM Users WHERE username = ?', [username], callback);
+  }
 };
 
 module.exports = login;
