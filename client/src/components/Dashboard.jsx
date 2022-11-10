@@ -1,58 +1,67 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { logOut, selectFullname, selectToken, selectUsername } from '../store/userSlice'
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
+import {
+    Menu,
+    MenuHandler,
+    MenuList,
+    MenuItem,
+    Button,
+} from "@material-tailwind/react";
 
 
 const Dashboard = () => {
-    const token = useSelector(selectToken)
-    const userName = useSelector(selectUsername)
-    const fullname = useSelector(selectFullname)
+    const token = localStorage.getItem("token")
+    const userName = localStorage.getItem("username")
+    const fullname = localStorage.getItem("fullname")
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const temporaryLogoutButton = () => {
-        dispatch(logOut())
-        navigate("/")
+        localStorage.removeItem("token")
+        localStorage.removeItem("fullname")
+        localStorage.removeItem("userId")
+        localStorage.removeItem("username")
+        navigate("/login")
     }
 
 
     return (
-        
-        <div>
+
+        <div className='flex flex-col'>
             <div className='flex bg-bear bg-center bg-cover w-full h-screen'>
                 <div className='pl-12 pt-12'>
-                <DropdownButton id="dropdown-basic-button" title={" "+userName+" "}>
-                <Dropdown.Header>{fullname}</Dropdown.Header>
-                <Dropdown.Divider />
-                <Dropdown.Item href="#/action-2">Delete account</Dropdown.Item>
-                <Dropdown.Item onClick={temporaryLogoutButton}>Log out</Dropdown.Item>
-                </DropdownButton>
+                    <Menu
+                        animate={{
+                            mount: { y: 0 },
+                            unmount: { y: 25 },
+                        }}
+                    >
+                        <MenuHandler>
+                            <Button variant="gradient">{fullname}</Button>
+                        </MenuHandler>
+                        <MenuList>
+                            <span className='pl-3'>{userName}</span>
+                            <MenuItem onClick={temporaryLogoutButton}><p className='text-black'>Log out</p></MenuItem>
+                        </MenuList>
+                    </Menu>
+
                 </div>
 
                 <div>
-                    <div className='Alaosa'>
-                        <div className='pt-32 items-center justify-center w-full content-center'>
-                            <div className='pl-32 pb-48 pt-20'>
-                                <button  className='bg-blue-600 text-white text-5xl w-96 h-36 rounded-full' type='submit'>My Visualizations</button>
-                            </div>
-                            <div className='pl-32 pb-8'>
-                                <button  className='bg-blue-600 text-white text-5xl w-96 h-36 rounded-full' type='submit'>Create new visualization</button>
-                            </div>
-                        </div>
-
-                    </div>
+                    <Button variant="gradient" type='submit'>My Visualizations</Button>
+                    <Button variant="gradient" type='submit'>Create new visualization</Button>
                 </div>
             </div>
-        
-        
-    </div>
-        
 
-        
+
+
+
+        </div>
+
+
+
     )
 }
 

@@ -29,11 +29,11 @@ const Login = () => {
         axios.post(process.env.REACT_APP_REQUEST_URL + "login", params, config)
             .then((result) => {
                 if (result.data.token) {
-                    dispatch(addToken(result.data.token))
-                    dispatch(addFullname(result.data.fullname))
-                    dispatch(addUserId(result.data.idUsers))
-                    dispatch(addUsername(result.data.username))
-                    navigate("/dashboard")
+                    localStorage.setItem("token", result.data.token)
+                    localStorage.setItem("fullname", result.data.fullname)
+                    localStorage.setItem("userId", result.data.idUsers)
+                    localStorage.setItem("username", result.data.username)
+                    navigate("/")
                 }
             })
     }
@@ -41,7 +41,7 @@ const Login = () => {
     return (
         <div className='flex min-h-screen bg-bg-main bg-cover items-center w-full h-full lg:pl-[300px]'>
             <div className='flex-1 lg:flex-none flex justify-center items-center h-screen'>
-                <div className='flex flex-col justify-center items-center px-24 bg-white bg-opacity-70 w-screen lg:w-auto h-full lg:h-3/4 lg:rounded-3xl shadow-xl'>
+                <div className='flex flex-col justify-center items-center px-24 bg-white bg-opacity-40 w-screen lg:w-auto h-full lg:h-3/4 lg:rounded-3xl shadow-xl'>
                     <h1 className='text-4xl text-blue-600 '>Welcome!</h1>
                     <h1 className='text-2xl text-blue-500 mt-5'>Please Log In below.</h1>
                     <form className='flex flex-col space-y-5 mt-10' onSubmit={logIn}>

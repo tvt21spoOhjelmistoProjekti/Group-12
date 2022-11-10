@@ -4,12 +4,13 @@ import './App.css';
 import Dashboard from './components/Dashboard';
 import Login from './components/Login';
 import Register from './components/Register';
+import { PrivateRoute } from './protectedroute/PrivateRoute';
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/" element={<PrivateRoute> <Dashboard /></PrivateRoute>} />
+      <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
       <Route path="*" element={<Navigate to="/" replace />} />
