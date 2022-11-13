@@ -1,19 +1,22 @@
 import axios from 'axios';
 import React from 'react'
+import { useContext } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import { addFullname, addToken, addUserId, addUsername, selectToken, selectUsername } from '../store/userSlice';
+import { UserContext } from '../context/UserContext';
+
 
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const dispatch = useDispatch();
+    const { user, setUser } = useContext(UserContext)
+
     const navigate = useNavigate();
     const logIn = (e) => {
         e.preventDefault();
+        console.log(user)
 
 
         const params = new URLSearchParams()
@@ -29,13 +32,21 @@ const Login = () => {
         axios.post(process.env.REACT_APP_REQUEST_URL + "login", params, config)
             .then((result) => {
                 if (result.data.token) {
-                    localStorage.setItem("token", result.data.token)
-                    localStorage.setItem("fullname", result.data.fullname)
-                    localStorage.setItem("userId", result.data.idUsers)
-                    localStorage.setItem("username", result.data.username)
+
+                    const user = {
+                        status: "logged_in",
+                        token: result.data.token,
+                        username: result.data.fullname,
+                        userId: result.data.idUsers,
+                        fullname: result.data.username
+                    }
+
+                    setUser(user)
+                    localStorage.setItem("user", JSON.stringify(user))
                     navigate("/")
                 }
             })
+
     }
 
     return (
@@ -61,7 +72,6 @@ const Login = () => {
 
                         <button className='bg-blue-600 text-white w-56 h-9 rounded-full' type='submit'>Log In</button>
                     </form>
-
                     <div className='mt-4'>
                         <h1 className='text-gray-500'>No account? <a className='text-blue-600 font-semibold' href='/register'>Click here!</a></h1>
                     </div>
