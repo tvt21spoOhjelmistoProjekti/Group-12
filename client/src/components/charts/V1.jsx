@@ -1,20 +1,31 @@
-import React from 'react'
-import { useState } from 'react'
-import { useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { Chart } from "chart.js/auto";
 import "chartjs-adapter-luxon";
 import { Line } from "react-chartjs-2";
 import axios from 'axios'
+import { UserContext } from '../../context/UserContext';
 
 const V1 = () => {
 
     const [tableData, setTableData] = useState(null)
+    const { user, setUser } = useContext(UserContext)
+
 
     const getData = async () => {
-        try {
-            const response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V1");
-            const response2 = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V2");
 
+
+        try {
+
+            const config = {
+                headers: {
+                    'Authorization': `Basic ${user.token}`
+                }
+            }
+
+            const response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V1", config);
+            const response2 = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V2", config);
+
+            console.log(response.data)
 
 
             setTableData({
@@ -152,7 +163,7 @@ const V1 = () => {
     };
 
     return (
-        <div className='max-w-[1000px]'>{tableData && <Line options={options} data={tableData} />}</div>
+        <div className='max-w-[1200px]'>{tableData && <Line options={options} data={tableData} />}</div>
     )
 }
 
