@@ -40,6 +40,7 @@ const Navbar = () => {
                         <MenuList>
                             <span className='pl-3'>{user.username}</span>
                             <MenuItem onClick={temporaryLogoutButton}><p className='text-black'>Log out</p></MenuItem>
+                            <MenuItem ><p className='text-red-500'>Delete account</p></MenuItem>
                         </MenuList>
                     </Menu>
                 </div>
@@ -54,6 +55,7 @@ const Navbar = () => {
                             <MenuItem><p className='text-black mt-2'>My Visualizations</p></MenuItem>
                             <MenuItem><p className='text-black'>Create new visualization</p></MenuItem>
                             <MenuItem onClick={temporaryLogoutButton}><p className='text-black'>Log out</p></MenuItem>
+                            <MenuItem ><p className='text-red-700'>Delete account</p></MenuItem>
                         </MenuList>
                     </Menu>
                 </div>

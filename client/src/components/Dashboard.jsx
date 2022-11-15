@@ -9,7 +9,6 @@ import {
     Button,
 } from "@material-tailwind/react";
 import { UserContext } from '../context/UserContext';
-import { FaBars } from 'react-icons/fa'
 import Navbar from './Navbar';
 import V1 from './charts/V1';
 import V3 from './charts/V3';
@@ -24,7 +23,8 @@ const Dashboard = () => {
     return (
         <>
             <Navbar />
-            <div className='flex flex-col justify-center  min-w-screen min-h-screen'>
+            <div>
+
                 <V1 />
                 <V3 />
             </div>

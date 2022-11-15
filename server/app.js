@@ -11,11 +11,8 @@ var loginRouter = require('./routes/login');
 var deleteuserRouter = require('./routes/deleteuser');
 var chartData = require('./routes/chartData')
 var app = express();
-
 var cors = require('cors')
-
 app.use(cors())
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -30,28 +27,27 @@ app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/users', usersRouter);
 app.use('/deleteuser', deleteuserRouter);
-app.use('/chart', chartData);
 
 app.use(authenticateToken);
+app.use('/chart', chartData);
+
 
 
 
 function authenticateToken(req, res, next) {
-  const authHeader = req.headers['authorization']
-  const token = authHeader && authHeader.split(' ')[1]
-
-  console.log("token = " + token);
-  if (token == null) return res.sendStatus(401)
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (token == null) return res.sendStatus(401);
 
   jwt.verify(token, process.env.MY_TOKEN, (err, user) => {
-    console.log(err)
+    console.log(err);
 
-    if (err) return res.sendStatus(403)
+    if (err) return res.sendStatus(403);
 
-    req.user = user
+    req.user = user;
 
-    next()
-  })
+    next();
+  });
 }
 
 
