@@ -9,7 +9,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var deleteuserRouter = require('./routes/deleteuser');
-const db = require('./database');
+var chartData = require('./routes/chartData')
 var app = express();
 
 app.use(logger('dev'));
@@ -43,6 +43,7 @@ app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/users', usersRouter);
 app.use('/deleteuser', deleteuserRouter);
+app.use('/chart', chartData);
 
 app.use(authenticateToken);
 

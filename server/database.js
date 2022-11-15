@@ -1,16 +1,17 @@
 var mysql = require('mysql');
-
+const dotenv = require('dotenv');
+dotenv.config();
 var connection = mysql.createConnection({
-    host: 'sql11.freemysqlhosting.net',
-    user: 'sql11537887',
-    password: 'QIhYNS6m55',
-    database: 'sql11537887'
+    host: process.env.MYSQL_HOST,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DATABASE
 });
 
-connection.connect(function(error){
-    if(!!error){
+connection.connect(function (error) {
+    if (!!error) {
         console.log(error);
-    } else{
+    } else {
         console.log('connected...!');
 
     }
