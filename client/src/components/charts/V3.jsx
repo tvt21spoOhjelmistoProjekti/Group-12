@@ -1,26 +1,34 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useContext, useState, useEffect } from 'react'
 import { Chart } from "react-chartjs-2";
 import "chartjs-adapter-luxon";
 import { Line } from "react-chartjs-2";
 import axios from "axios";
+import { UserContext } from '../../context/UserContext';
 
 const V3 = () => {
     const [tableData, setTableData] = useState(null)
+    const { user, setUser } = useContext(UserContext)
+
 
     const getData = async () => {
-        try{
-            const response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V3")
-           console.log(response.data.map(d => ({ time: new Date(d.Time_Montly), value: d.Average_Monthly })))
-           //console.log(response.data)
+        try {
+
+            const config = {
+                headers: {
+                    'Authorization': `Basic ${user.token}`
+                }
+            }
+
+            const response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V3", config)
+            console.log(response.data.map(d => ({ time: new Date(d.Time_Montly), value: d.Average_Monthly })))
+            //console.log(response.data)
 
 
             setTableData({
                 datasets: [
                     {
                         label: "Annual Mean Data",
-                        data: response.data.map(d => ({ time: new Date(d.Time_Annual + "-01-01" ), value: d.Mean_Annual })),
+                        data: response.data.filter(d => d.Mean_Annual != 0).map(d => ({ time: new Date(d.Time_Annual + "-01-01"), value: d.Mean_Annual })),
                         borderColor: "black",
                         backgroundColor: "grey",
                         borderWidth: 2,
@@ -30,7 +38,7 @@ const V3 = () => {
                             yAxisKey: "value",
                         },
                         pointRadius: 0,
-                    
+
                     },
                     {
                         label: "Monthly mean Data",
@@ -46,7 +54,7 @@ const V3 = () => {
                     },
                 ],
             })
-        }catch (error) {
+        } catch (error) {
             console.log(error)
         }
     }

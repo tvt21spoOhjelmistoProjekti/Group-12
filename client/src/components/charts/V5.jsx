@@ -1,18 +1,26 @@
-import React from 'react'
-import { useState } from 'react'
-import { useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
+
 import { Chart } from "chart.js/auto";
 import "chartjs-adapter-luxon";
 import { Line } from "react-chartjs-2";
 import axios from 'axios'
+import { UserContext } from '../../context/UserContext';
 
 const V5 = () => {
 
     const [tableData, setTableData] = useState(null)
+    const { user, setUser } = useContext(UserContext)
 
     const getData = async () => {
         try {
-            const response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V5_Data");
+
+            const config = {
+                headers: {
+                    'Authorization': `Basic ${user.token}`
+                }
+            }
+
+            const response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V5_Data", config);
 
 
 
@@ -62,8 +70,8 @@ const V5 = () => {
                         borderWidth: 1.5,
 
                     },
-                    
-                    
+
+
                 ],
             })
 
@@ -95,7 +103,7 @@ const V5 = () => {
             },
             yAxis: {
                 type: "logarithmic",
-                
+
             },
         },
     };
