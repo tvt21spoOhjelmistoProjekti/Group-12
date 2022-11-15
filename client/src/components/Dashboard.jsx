@@ -12,6 +12,7 @@ import { UserContext } from '../context/UserContext';
 import { FaBars } from 'react-icons/fa'
 import Navbar from './Navbar';
 import V1 from './charts/V1';
+import V5 from './charts/V5';
 
 
 
@@ -25,6 +26,7 @@ const Dashboard = () => {
             <Navbar />
             <div className='flex flex-col justify-center  min-w-screen min-h-screen'>
                 <V1 />
+                <V5 />
             </div>
         </>
     )
