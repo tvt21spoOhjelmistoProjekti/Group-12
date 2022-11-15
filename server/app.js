@@ -12,7 +12,6 @@ var deleteuserRouter = require('./routes/deleteuser');
 var chartData = require('./routes/chartData')
 var app = express();
 var cors = require('cors')
-
 app.use(cors())
 app.use(logger('dev'));
 app.use(express.json());
