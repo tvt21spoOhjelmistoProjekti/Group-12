@@ -25,7 +25,6 @@ const Dashboard = () => {
         <>
             <Navbar />
             <div>
-
                 <V1 />
                 <V5 />
                 <V3 />
