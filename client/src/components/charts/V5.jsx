@@ -109,7 +109,18 @@ const V5 = () => {
     };
 
     return (
-        <div className='max-w-[1000px]'>{tableData && <Line options={options} data={tableData} />}</div>
+        <div className='max-w-[1000px]'>{tableData && <Line options={options} data={tableData} />}
+            <div className='pt-2 pl-3 text-justify'>
+                <p>In January 1998, the collaborative ice-drilling project between Russia, the United States, and France at the Russian Vostok station in East Antarctica yielded the deepest ice core ever recovered, reaching a depth of 3,623 m (Petit et al. 1997, 1999). Ice cores are unique with their entrapped air inclusions enabling direct records of past changes in atmospheric trace-gas composition. The extension of the Vostok CO2 record shows that the main trends of CO2 are similar for each glacial cycle. Major transitions from the lowest to the highest values are associated with glacial-interglacial transitions. During these transitions, the atmospheric concentrations of CO2 rises from 180 to 280-300 ppmv (Petit et al. 1999). <br></br>The extension of the Vostok CO2 record shows the present-day levels of CO2 are unprecedented during the past 420 kyr. Pre-industrial Holocene levels (~280 ppmv) are found during all interglacials, with the highest values (~300 ppmv) found approximately 323 kyr BP. When the Vostok ice core data were compared with other ice core data (Delmas et al. 1980; Neftel et al. 1982) for the past 30,000 - 40,000 years, good agreement was found between the records: all show low CO2 values [~200 parts per million by volume (ppmv)] during the Last Glacial Maximum and increased atmospheric CO2 concentrations associated with the glacial-Holocene transition. According to Barnola et al. (1991) and Petit et al. (1999) these measurements indicate that, at the beginning of the deglaciations, the CO2 increase either was in phase or lagged by less than ~1000 years with respect to the Antarctic temperature, whereas it clearly lagged behind the temperature at the onset of the glaciations.</p>
+                    <div className='pt-5 font-bold font-sans hover:font-serif text-blue-500'>
+                        <a href='https://cdiac.ess-dive.lbl.gov/trends/co2/vostok.html'>Study description</a>
+                    </div>
+                    <div className='pt-5 font-bold font-sans hover:font-serif text-blue-500'>
+                        <a href='https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/vostok.icecore.co2'>Dataset</a>
+                    </div>
+            </div>
+        </div>
+
     )
 }
 
