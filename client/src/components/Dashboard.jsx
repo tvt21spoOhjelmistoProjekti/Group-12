@@ -32,22 +32,19 @@ const Dashboard = () => {
                     <div className='w-full bg-white rounded shadow-xl'>
                         <V1 />
                     </div>
+                    <div className='w-full bg-white rounded shadow-xl'>
+                        <V3 />
+                    </div>
                     <div className='w-full bg-white rounded shadow-xl'  >
                         <V5 />
                     </div>
-                    <div className='w-full bg-white rounded shadow-xl'>
-                        <V3 />
+                    <div className='w-full bg-white rounded shadow-xl '>
+                        <V7 />
                     </div>
                     <div className='w-full bg-white rounded shadow-xl '>
                         <V9 />
                     </div>
                 </div>
-            <div>
-                <V1 />
-                <V5 />
-                <V3 />
-                <V6 />
-                <V7 />
             </div>
         </>
     )
