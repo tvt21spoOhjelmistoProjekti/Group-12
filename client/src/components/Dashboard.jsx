@@ -13,6 +13,7 @@ import Navbar from './Navbar';
 import V1 from './charts/V1';
 import V5 from './charts/V5';
 import V3 from './charts/V3';
+import V9 from './charts/V9';
 
 
 
@@ -24,10 +25,21 @@ const Dashboard = () => {
     return (
         <>
             <Navbar />
-            <div>
-                <V1 />
-                <V5 />
-                <V3 />
+            <div className='bg-blue-400 p-4 xl:p-20 min-h-screen'>
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-10 min-w-ful xl:px-20 '>
+                    <div className='w-full bg-white rounded shadow-xl'>
+                        <V1 />
+                    </div>
+                    <div className='w-full bg-white rounded shadow-xl'  >
+                        <V5 />
+                    </div>
+                    <div className='w-full bg-white rounded shadow-xl'>
+                        <V3 />
+                    </div>
+                    <div className='w-full bg-white rounded shadow-xl '>
+                        <V9 />
+                    </div>
+                </div>
             </div>
         </>
     )

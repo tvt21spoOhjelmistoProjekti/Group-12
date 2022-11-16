@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from 'react'
-
 import { Chart } from "chart.js/auto";
 import "chartjs-adapter-luxon";
 import { Line } from "react-chartjs-2";
@@ -109,7 +108,7 @@ const V5 = () => {
     };
 
     return (
-        <div className='max-w-[1000px]'>{tableData && <Line options={options} data={tableData} />}</div>
+        <div>{tableData && <Line options={options} data={tableData} />}</div>
     )
 }
 

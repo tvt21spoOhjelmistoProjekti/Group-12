@@ -4,10 +4,12 @@ import "chartjs-adapter-luxon";
 import { Line } from "react-chartjs-2";
 import axios from 'axios'
 import { UserContext } from '../../context/UserContext';
+import 'chartjs-plugin-zoom';
 
 const V1 = () => {
 
     const [tableData, setTableData] = useState(null)
+    const [options, setOptions] = useState(null)
     const { user, setUser } = useContext(UserContext)
 
 
@@ -15,7 +17,6 @@ const V1 = () => {
 
 
         try {
-
             const config = {
                 headers: {
                     'Authorization': `Basic ${user.token}`
@@ -25,7 +26,7 @@ const V1 = () => {
             const response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V1", config);
             const response2 = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V2", config);
 
-            console.log(response.data)
+
 
 
             setTableData({
@@ -113,11 +114,11 @@ const V1 = () => {
 
                     },
                     {
-                        label: "Optional",
+                        label: "(Optional) Northern Hemisphere temperature reconstruction",
                         data: response2.data.map(d => ({ time: new Date(d.Year + "-01-01"), value: d.T })),
-                        borderColor: "yellow",
-                        borderWidth: 1,
-                        backgroundColor: "yellow",
+                        borderColor: "#f64aff",
+                        borderWidth: 2,
+                        backgroundColor: "#f64aaa",
                         parsing: {
                             xAxisKey: "time",
                             yAxisKey: "value",
@@ -126,6 +127,43 @@ const V1 = () => {
                         hidden: true
                     },
                 ],
+            })
+
+            setOptions({
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: "top",
+                    },
+                    title: {
+                        display: true,
+                        text: "Temperature Anomalies from 1850",
+                    },
+                    zoom: {
+                        pan: {
+                            enabled: true,
+                            mode: 'x',
+                        },
+                        zoom: {
+                            enabled: true,
+                            drag: true,
+                            mode: 'xy'
+                        }
+                    }
+
+                },
+                scales: {
+                    x: {
+                        type: "time",
+                        time: {
+                            unit: "month",
+                        },
+                    },
+                    yAxis: {
+                        type: "linear",
+                    },
+                },
+
             })
 
         } catch (error) {
@@ -138,32 +176,26 @@ const V1 = () => {
     }, [])
 
 
-    const options = {
-        responsive: true,
-        plugins: {
-            legend: {
-                position: "top",
-            },
-            title: {
-                display: true,
-                text: "Temperature Anomalies from 1850",
-            },
-        },
-        scales: {
-            x: {
-                type: "time",
-                time: {
-                    unit: "month",
-                },
-            },
-            yAxis: {
-                type: "linear",
-            },
-        },
-    };
 
     return (
-        <div className='max-w-[1200px]'>{tableData && <Line options={options} data={tableData} />}</div>
+        <div>{tableData && <Line options={options} data={tableData} />}
+            <div className='m-3'>
+                <p> <storng className="font-bold">{"(Optional data)"}</storng> Northern Hemisphere temperature reconstruction for the 1850-1979 years by combining low-resolution proxies with tree-ring data, using a wavelet transform technique to achieve timescale-dependent processing of the data.</p>
+
+                <ul className='mt-3 list-disc'>
+                    <label className='font-semibold'>Sources</label>
+                    <li className='ml-5'>
+                        <a href='https://www.metoffice.gov.uk/hadobs/hadcrut5/'>Temperature Anomalies from 1850</a>
+                    </li>
+                    <li className='ml-5'>
+                        <a href='https://bolin.su.se/data/moberg-2012-nh-1?n=moberg-2005'>Optional data</a>
+                    </li>
+                    <li className='ml-5'>
+                        <a href='https://gml.noaa.gov/ccgg/about/co2_measurements.html'>Optional data measurement description</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     )
 }
 
