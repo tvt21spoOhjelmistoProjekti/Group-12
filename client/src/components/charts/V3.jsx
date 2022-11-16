@@ -36,7 +36,7 @@ const V3 = () => {
                             xAxisKey: "time",
                             yAxisKey: "value",
                         },
-                        pointRadius: 0,
+                        pointRadius:  0,
 
                     },
                     {
