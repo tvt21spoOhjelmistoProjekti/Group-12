@@ -20,7 +20,6 @@ const V3 = () => {
             }
 
             const response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V3", config)
-            console.log(response.data.map(d => ({ time: new Date(d.Time_Montly), value: d.Average_Monthly })))
             //console.log(response.data)
 
 
@@ -89,7 +88,7 @@ const V3 = () => {
     };
 
     return (
-        <div className='max-w-[1000px]'>{tableData && <Line options={options} data={tableData} />}</div>
+        <div>{tableData && <Line options={options} data={tableData} />}</div>
     )
 }
 

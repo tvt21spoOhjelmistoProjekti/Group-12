@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from 'react'
-
 import { Chart } from "chart.js/auto";
 import "chartjs-adapter-luxon";
 import { Line } from "react-chartjs-2";
@@ -125,7 +124,6 @@ const V5 = () => {
                     </div>
             </div>
         </div>
-
     )
 }
 
