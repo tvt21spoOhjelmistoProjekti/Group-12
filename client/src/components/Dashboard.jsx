@@ -13,6 +13,7 @@ import Navbar from './Navbar';
 import V1 from './charts/V1';
 import V5 from './charts/V5';
 import V3 from './charts/V3';
+import V7 from './charts/V7';
 
 
 
@@ -28,6 +29,7 @@ const Dashboard = () => {
                 <V1 />
                 <V5 />
                 <V3 />
+                <V7 />
             </div>
         </>
     )
