@@ -87,6 +87,11 @@ const V5 = () => {
 
     const options = {
         responsive: true,
+        interaction: {
+            mode: 'index',
+            intersect: false,
+          },
+          stacked: false,
         plugins: {
             legend: {
                 position: "top",
