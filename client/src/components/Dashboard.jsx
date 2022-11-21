@@ -12,10 +12,10 @@ import { UserContext } from '../context/UserContext';
 import Navbar from './Navbar';
 import V1 from './charts/V1';
 import V5 from './charts/V5';
-import V3 from './charts/V3';
 import V9 from './charts/V9';
 import V7 from './charts/V7';
 import V6 from './charts/V6';
+import V3_V4 from './charts/V3';
 
 
 
@@ -33,7 +33,7 @@ const Dashboard = () => {
                         <V1 />
                     </div>
                     <div className='w-full bg-white rounded shadow-xl'>
-                        <V3 />
+                        <V3_V4 />
                     </div>
                     <div className='w-full bg-white rounded shadow-xl'  >
                         <V5 />
