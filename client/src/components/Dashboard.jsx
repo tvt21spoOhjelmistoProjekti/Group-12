@@ -21,7 +21,6 @@ import V3_V4 from './charts/V3';
 
 const Dashboard = () => {
     const { user, setUser } = useContext(UserContext)
-    const navigate = useNavigate();
 
 
     return (

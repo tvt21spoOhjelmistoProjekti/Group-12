@@ -10,11 +10,17 @@ import {
 } from "@material-tailwind/react";
 import { UserContext } from '../context/UserContext';
 import { FaBars } from 'react-icons/fa'
+import CreateNewVisualization from './CreateNewVisualization';
 
 
 const Navbar = () => {
     const { user, setUser } = useContext(UserContext)
     const navigate = useNavigate();
+
+    const navigateToNewVisuals = () =>{
+        navigate("/CreateNewVisualization");
+        
+    };
 
 
     const temporaryLogoutButton = () => {
@@ -30,9 +36,8 @@ const Navbar = () => {
             <div className='flex h-20 shadow-lg items-center justify-between'>
                 <h1 className='text-2xl lg:text-5xl ml-8'>Placeholder</h1>
                 <div className='hidden space-x-8 mr-8 lg:flex'>
-                    <Button variant="gradient" onClick={() => {
-                    }}>My Visualizations</Button>
-                    <Button variant="gradient" >Create new visualization</Button>
+                    <Button variant="gradient" onClick={() => { }}>My Visualizations</Button>
+                    <Button  variant="gradient" onClick={navigateToNewVisuals} >Create new visualization</Button>
                     <Menu>
                         <MenuHandler>
                             <Button variant="gradient" className='flex justify-center items-center'>{user.fullname} <FaBars className='text-2xl ml-4' /></Button>
@@ -53,7 +58,7 @@ const Navbar = () => {
                         <MenuList>
                             <span className='pl-3'>{user.username}</span>
                             <MenuItem><p className='text-black mt-2'>My Visualizations</p></MenuItem>
-                            <MenuItem><p className='text-black'>Create new visualization</p></MenuItem>
+                            <MenuItem onClick={navigateToNewVisuals}><p className='text-black'>Create new visualization</p></MenuItem>
                             <MenuItem onClick={temporaryLogoutButton}><p className='text-black'>Log out</p></MenuItem>
                             <MenuItem ><p className='text-red-700'>Delete account</p></MenuItem>
                         </MenuList>
@@ -62,6 +67,5 @@ const Navbar = () => {
             </div>
         </div>
     )
-}
-
+    }
 export default Navbar
