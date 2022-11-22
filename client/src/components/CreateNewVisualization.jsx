@@ -25,7 +25,7 @@ return (
          </div>
          <div className=' text-center'>
         <button class="border-deep-purple-900  bg-white hover:bg-white text-blue-500 font-bold py-3 px-6 rounded-full">V1+V2</button>
-        <button class="border-black bg-white hover:bg-white text-blue-500 font-bold py-3 px-6 rounded-full">V2+V3</button>
+        <button class="bg-white hover:bg-white text-blue-500 font-bold py-3 px-6 rounded-full border-black border-2">V2+V3</button>
         <button class="bg-white hover:bg-white text-blue-500 font-bold py-3 px-6 rounded-full ">V4</button>
         <button class="bg-white hover:bg-white text-blue-500 font-bold py-3 px-6 rounded-full">V5</button>
         <button class="bg-white hover:bg-white text-blue-500 font-bold py-3 px-6 rounded-full">V6</button>

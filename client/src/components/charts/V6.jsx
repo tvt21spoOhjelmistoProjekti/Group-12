@@ -97,7 +97,7 @@ const V6 = () => {
 
     return (
         <div className='max-w-[1000px]'>{tableData && <Line options={options} data={tableData} />}
-            <div className='pt-2 pl-3 text-justify'>
+            <div className='pt-2 px-3 text-justify'>
                 <p>Revised EPICA Dome C and Antarctic composite ice core atmospheric CO2 data. This new version of CO2 composite
                     replaces the old version of Luthi et al. (2008), which contains the analytical bias described in Bereiter et al. 2015
                     and lower quality data in other sections.</p>
