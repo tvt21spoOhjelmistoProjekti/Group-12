@@ -21,30 +21,44 @@ const V8 = () => {
             }
 
             const response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V8", config);
-            console.log(Object.keys(response.data[0]));
+            //console.log(Object.keys(response.data[0]));
+            //console.log(response.data.map(d => d))
+            const mappingLabels = Object.keys(response.data[0]);
+            const mappingArray = []
 
-
-
-            setTableData({
-                datasets: [
-                    {
-                        label: "CO2 (ppm)",
-                        data: response.data.filter(d => d.Year !== 0).map(d => ({ xAxis: d.Year, value: d.ALBANIA })),
-                        borderColor: "blue",
-                        backgroundColor: "blue",
-                        yAxisID: 'y',
-
-                        parsing: {
-                            xAxisKey: "xAxis",
-                            yAxisKey: "value",
-                        },
-                        pointRadius: 0,
-                        borderWidth: 1,
-
-                    },
-                ],
+            mappingLabels.map(c => {
+                //console.log(c)
+                
+                if(c != "Year"){
+                    mappingArray.push(response.data.map(d => ({ xAxis: d.Year, value: d[c], country: c })))
+                }
             })
 
+            //console.log(mappingLabels)
+            //console.log(mappingArray)
+
+            // response.data.filter(d => d[c] == c).map(d => ({ xAxis: d.Year, value: d[c]}))
+            
+            setTableData({
+                datasets: mappingArray.map(c => {
+                        console.log(c.map(d => d.xAxis))
+                        return {
+                            label: c[0].country,
+                            data: c.map(d =>  ({ xAxis: d.xAxis, value: d.value})),
+                            borderColor: "blue",
+                            backgroundColor: "blue",
+                            yAxisID: 'y',
+                            
+                            parsing: {
+                                xAxisKey: "xAxis",
+                                yAxisKey: "value",
+                            },
+                            pointRadius: 0,
+                            borderWidth: 1,
+                        }
+                        })
+            })
+            
         } catch (error) {
             console.log("err")
         }
