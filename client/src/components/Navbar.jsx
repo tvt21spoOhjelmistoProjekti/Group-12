@@ -11,6 +11,7 @@ import {
 import { UserContext } from '../context/UserContext';
 import { FaBars } from 'react-icons/fa'
 import CreateNewVisualization from './CreateNewVisualization';
+import { Link } from "react-router-dom";
 
 
 const Navbar = () => {
@@ -34,10 +35,10 @@ const Navbar = () => {
 
         <div className='flex flex-col '>
             <div className='flex h-20 shadow-lg items-center justify-between'>
-                <h1 className='text-2xl lg:text-5xl ml-8'>Placeholder</h1>
+                <h1 className='text-2xl lg:text-5xl ml-8'><Link to="/">Placeholder</Link></h1>
                 <div className='hidden space-x-8 mr-8 lg:flex'>
                     <Button variant="gradient" onClick={() => { }}>My Visualizations</Button>
-                    <Button  variant="gradient" onClick={navigateToNewVisuals} >Create new visualization</Button>
+                    <Button  variant="gradient" > <Link to="createNewVisualization">Create new visualization</Link></Button>
                     <Menu>
                         <MenuHandler>
                             <Button variant="gradient" className='flex justify-center items-center'>{user.fullname} <FaBars className='text-2xl ml-4' /></Button>

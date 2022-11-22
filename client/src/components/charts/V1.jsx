@@ -178,7 +178,10 @@ const V1 = () => {
 
 
     return (
-        <div>{tableData && <Line options={options} data={tableData} />}
+        <div>
+            <div>
+                {tableData && <Line options={options} data={tableData} />}
+            </div>
             <div className='m-3'>
                 <h1> <p className="font-bold">{"(Optional data)"}</p> Northern Hemisphere temperature reconstruction for the 1850-1979 years by combining low-resolution proxies with tree-ring data, using a wavelet transform technique to achieve timescale-dependent processing of the data.</h1>
 

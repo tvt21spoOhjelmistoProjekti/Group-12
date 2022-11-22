@@ -21,8 +21,7 @@ function App() {
   </>
 
   if (user?.token) {
-    authRoutes = <Route path="/" element={<Dashboard />} />
-    authRoutes = <Route path="/" element={<CreateNewVisualization />} />
+    authRoutes = <> <Route path="/" element={<Dashboard />} /> <Route path="/createNewVisualization" element={<CreateNewVisualization />} /></> 
   
   }
 

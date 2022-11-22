@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const publicVisualizations = require('../models/visualization_model')
 const chartData = require('../models/data_model');
-const { response } = require('../app');
 
 
 router.get('/:url', async (req, res) => {
@@ -33,8 +32,6 @@ router.get('/:url', async (req, res) => {
                         })
                     })
                 }
-
-
                 for (let i = 0; i < splitedVisual.length; i++) {
                     await getData(splitedVisual[i])
                 }
