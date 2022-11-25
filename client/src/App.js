@@ -6,6 +6,7 @@ import Dashboard from './components/Dashboard';
 import Login from './components/Login';
 import Register from './components/Register';
 import { UserContext } from './context/UserContext';
+import CreateNewVisualization from './components/CreateNewVisualization';
 
 function App() {
 
@@ -16,10 +17,12 @@ function App() {
   let authRoutes = <>
     <Route path="/" element={<Login />} />
     <Route path="/register" element={<Register />} />
+    <Route path="/CreateNewVisualization" element={<CreateNewVisualization />} />
   </>
 
   if (user?.token) {
-    authRoutes = <Route path="/" element={<Dashboard />} />
+    authRoutes = <> <Route path="/" element={<Dashboard />} /> <Route path="/createNewVisualization" element={<CreateNewVisualization />} /></> 
+  
   }
 
   return (

@@ -129,7 +129,7 @@ const V7 = () => {
 
     return (
         <div className='max-w-[1000px]'>{tableData && <Line options={options} data={tableData} />}
-            <div className='pt-2 pl-3 text-justify'>
+            <div className='pt-2 px-3 text-justify'>
                 <p>Reconstructions of Earth’s past climate strongly influence our
 understanding of the dynamics and sensitivity of the climate
 system. Yet global temperature has been reconstructed for only a few
