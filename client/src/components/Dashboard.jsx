@@ -43,12 +43,12 @@ const Dashboard = () => {
                         <V7 />
                     </div>
                     <div className='w-full bg-white rounded shadow-xl '>
+                        <V8 />
                     </div>
                     <div className='w-full bg-white rounded shadow-xl '>
                         <V9 />
                     </div>
                 </div>
-                        <V8 />
             </div>
         </>
     )
