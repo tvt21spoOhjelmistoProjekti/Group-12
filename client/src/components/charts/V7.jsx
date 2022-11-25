@@ -166,7 +166,7 @@ to respond to global warming.</p>
                         <a href='https://climate.fas.harvard.edu/files/climate/files/snyder_2016.pdf'>Study description</a>
                     </div>
                     <div className='pt-5 font-bold font-sans hover:font-serif text-blue-500'>
-                        <a href='http://carolynsnyder.com/publications.php -> http://carolynsnyder.com/papers/Snyder_Data_Figures.zip'>Dataset</a>
+                        <a href='http://carolynsnyder.com/papers/Snyder_Data_Figures.zip'>Dataset</a>
                     </div>
             </div>
         </div>
