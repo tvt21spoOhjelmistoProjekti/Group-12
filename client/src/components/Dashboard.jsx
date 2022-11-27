@@ -15,6 +15,8 @@ import V5 from './charts/V5';
 import V9 from './charts/V9';
 import V7 from './charts/V7';
 import V6 from './charts/V6';
+
+import V8 from './charts/V8';
 import V3_V4 from './charts/V3';
 
 
@@ -39,6 +41,9 @@ const Dashboard = () => {
                     </div>
                     <div className='w-full bg-white rounded shadow-xl '>
                         <V7 />
+                    </div>
+                    <div className='w-full bg-white rounded shadow-xl '>
+                        <V8 />
                     </div>
                     <div className='w-full bg-white rounded shadow-xl '>
                         <V6 />

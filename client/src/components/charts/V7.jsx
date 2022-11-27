@@ -168,6 +168,7 @@ const V7 = () => {
                 <div className='pt-5 font-bold font-sans hover:font-serif text-blue-500'>
                     <a href='http://carolynsnyder.com/publications.php -> http://carolynsnyder.com/papers/Snyder_Data_Figures.zip'>Dataset</a>
                 </div>
+
             </div>
         </div>
 

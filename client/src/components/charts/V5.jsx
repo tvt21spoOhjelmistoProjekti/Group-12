@@ -40,21 +40,6 @@ const V5 = ({chartData}) => {
                     },
 
                     {
-                        label: "Age of the ice (yr BP)",
-                        data: response.data.map(d => ({ xAxis: d.age_mean, value: d.age })),
-                        borderColor: "red",
-                        backgroundColor: "red",
-
-                        parsing: {
-                            xAxisKey: "xAxis",
-                            yAxisKey: "value",
-                        },
-                        pointRadius: 0,
-                        borderWidth: 1.5,
-
-                    },
-
-                    {
                         label: "CO2 Concentration (ppmv)",
                         data: response.data.map(d => ({ xAxis: d.age_mean, value: d.co2 })),
                         borderColor: "blue",
@@ -91,6 +76,12 @@ const V5 = ({chartData}) => {
           },
           stacked: false,
         plugins: {
+            tooltip: {
+                callbacks: {
+                    label: (item) =>
+                        `${item.dataset.label == "Depth (m)" ? "Depth" : "CO2 Concentration"}: ${item.formattedValue} ${item.dataset.label == "Depth (m)" ? "m" : "ppmv"}`,
+                },
+            },
             legend: {
                 position: "top",
             },
