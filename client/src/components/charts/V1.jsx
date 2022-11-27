@@ -6,28 +6,38 @@ import axios from 'axios'
 import { UserContext } from '../../context/UserContext';
 import 'chartjs-plugin-zoom';
 
-const V1 = () => {
+const optionalDesc = "Northern Hemisphere temperature reconstruction for the 1850-1979 years by combining low-resolution proxies with tree-ring data, using a wavelet transform technique to achieve timescale-dependent processing of the data.";
+
+const V1 = ({ v1Data, v2Data }) => {
 
     const [tableData, setTableData] = useState(null)
     const [options, setOptions] = useState(null)
+
+    const [showMore, setShowMore] = useState(false);
+
     const { user, setUser } = useContext(UserContext)
 
 
-    const getData = async () => {
+
+    const getData = async (v1Data, v2Data) => {
 
 
         try {
+
+            var response = []
+            var response2 = []
             const config = {
                 headers: {
                     'Authorization': `Basic ${user.token}`
                 }
             }
-
-            const response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V1", config);
-            const response2 = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V2", config);
-
-
-
+            if (!v1Data && !v2Data) {
+                response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V1", config);
+                response2 = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V2", config);
+            } else {
+                response.data = v1Data;
+                response2 = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V2", config);
+            }
 
             setTableData({
                 datasets: [
@@ -131,6 +141,11 @@ const V1 = () => {
 
             setOptions({
                 responsive: true,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                stacked: false,
                 plugins: {
                     legend: {
                         position: "top",
@@ -167,12 +182,13 @@ const V1 = () => {
             })
 
         } catch (error) {
-            console.log("err")
+            console.log(error)
         }
     }
 
     useEffect(() => {
-        getData()
+        getData(v1Data, v2Data)
+
     }, [])
 
 
@@ -183,20 +199,24 @@ const V1 = () => {
                 {tableData && <Line options={options} data={tableData} />}
             </div>
             <div className='m-3'>
-                <h1> <p className="font-bold">{"(Optional data)"}</p> Northern Hemisphere temperature reconstruction for the 1850-1979 years by combining low-resolution proxies with tree-ring data, using a wavelet transform technique to achieve timescale-dependent processing of the data.</h1>
+                <h1> <p className="font-bold">{"(Optional data)"}</p> {showMore ? optionalDesc : `${optionalDesc.substring(0, 100)}`}</h1>
 
-                <ul className='mt-3 list-disc'>
-                    <label className='font-semibold'>Sources</label>
-                    <li className='ml-5'>
-                        <a href='https://www.metoffice.gov.uk/hadobs/hadcrut5/'>Temperature Anomalies from 1850</a>
-                    </li>
-                    <li className='ml-5'>
-                        <a href='https://bolin.su.se/data/moberg-2012-nh-1?n=moberg-2005'>Optional data</a>
-                    </li>
-                    <li className='ml-5'>
-                        <a href='https://gml.noaa.gov/ccgg/about/co2_measurements.html'>Optional data measurement description</a>
-                    </li>
-                </ul>
+                <div className={showMore ? 'flex' : 'hidden'}>
+                    <ul className='mt-3 list-disc'>
+                        <label className='font-semibold'>Sources</label>
+                        <li className='ml-5'>
+                            <a href='https://www.metoffice.gov.uk/hadobs/hadcrut5/'>Temperature Anomalies from 1850</a>
+                        </li>
+                        <li className='ml-5'>
+                            <a href='https://bolin.su.se/data/moberg-2012-nh-1?n=moberg-2005'>Optional data</a>
+                        </li>
+                        <li className='ml-5'>
+                            <a href='https://gml.noaa.gov/ccgg/about/co2_measurements.html'>Optional data measurement description</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <h1 onClick={() => setShowMore(!showMore)} className='cursor-pointer text-blue-500 mt-3'>{showMore ? "Show Less" : " Show More"}</h1>
             </div>
         </div>
     )

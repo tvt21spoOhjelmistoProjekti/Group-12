@@ -7,6 +7,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import { UserContext } from './context/UserContext';
 import CreateNewVisualization from './components/CreateNewVisualization';
+import SharedVisualization from './components/SharedVisualization';
 
 function App() {
 
@@ -21,14 +22,15 @@ function App() {
   </>
 
   if (user?.token) {
-    authRoutes = <> <Route path="/" element={<Dashboard />} /> <Route path="/createNewVisualization" element={<CreateNewVisualization />} /></> 
-  
+    authRoutes = <> <Route path="/" element={<Dashboard />} /> <Route path="/createNewVisualization" element={<CreateNewVisualization />} /></>
+
   }
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <Routes>
         {authRoutes}
+        <Route path="/visualization/:urlParam" element={<SharedVisualization />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </UserContext.Provider>
