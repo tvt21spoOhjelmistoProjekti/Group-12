@@ -26,17 +26,17 @@ const V1 = ({ v1Data, v2Data }) => {
         try {
             var response = []
             var response2 = []
-            const config = {
-                headers: {
-                    'Authorization': `Basic ${user.token}`
-                }
-            }
             if (!v1Data && !v2Data) {
+                var config = {
+                    headers: {
+                        'Authorization': `Basic ${user.token}`
+                    }
+                }
                 response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V1", config);
                 response2 = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V2", config);
             } else {
                 response.data = v1Data;
-                response2 = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V2", config);
+                response2.data = v2Data
             }
             setDetailsV1(response.data.filter(d => d.description || d.SourceLink || d.SourceLinkUrl).map(d => ({ desc: d.description, SourceLink: d.SourceLink, SourceLinkUrl: d.SourceLinkUrl })))
             setDetailsV2(response2.data.filter(d => d.description || d.SourceLink || d.SourceLinkUrl).map(d => ({ desc: d.description, SourceLink: d.SourceLink, SourceLinkUrl: d.SourceLinkUrl })))
@@ -148,6 +148,7 @@ const V1 = ({ v1Data, v2Data }) => {
             })
 
             setOptions({
+                maintainAspectRatio: false,
                 responsive: true,
                 interaction: {
                     intersect: false,
@@ -204,7 +205,7 @@ const V1 = ({ v1Data, v2Data }) => {
     return (
         <>{tableData &&
             <div>
-                <div>
+                <div className='min-h-[700px]'>
                     <Line options={options} data={tableData} />
                 </div>
                 <div className='m-3'>

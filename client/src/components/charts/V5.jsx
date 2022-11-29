@@ -5,7 +5,7 @@ import { Line } from "react-chartjs-2";
 import axios from 'axios'
 import { UserContext } from '../../context/UserContext';
 
-const V5 = ({ chartData }) => {
+const V5 = ({ V5_Data }) => {
 
     const [tableData, setTableData] = useState(null)
     const { user, setUser } = useContext(UserContext)
@@ -14,6 +14,22 @@ const V5 = ({ chartData }) => {
     const [desc_link, setDesc_link] = useState("")
 
     const getData = async () => {
+
+        try {
+            var response = []
+
+            if (!V5_Data) {
+                var config = {
+                    headers: {
+                        'Authorization': `Basic ${user.token}`
+                    }
+                }
+                response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V5_Data", config);
+            } else {
+                response.data = V5_Data;
+            }
+
+
 
         try {   
                 const config = {

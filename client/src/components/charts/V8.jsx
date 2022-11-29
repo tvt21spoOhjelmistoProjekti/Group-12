@@ -6,7 +6,7 @@ import { Line } from "react-chartjs-2";
 import axios from 'axios'
 import { UserContext } from '../../context/UserContext';
 
-const V8 = () => {
+const V8 = ({ V8_Data }) => {
 
     const [tableData, setTableData] = useState(null)
     const { user, setUser } = useContext(UserContext)
@@ -24,13 +24,18 @@ const V8 = () => {
     const getData = async () => {
         try {
 
-            const config = {
-                headers: {
-                    'Authorization': `Basic ${user.token}`
-                }
-            }
 
-            const response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V8", config);
+            var response = []
+            if (!V8_Data) {
+                var config = {
+                    headers: {
+                        'Authorization': `Basic ${user.token}`
+                    }
+                }
+                response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V8", config);
+            } else {
+                response.data = V8_Data
+            }
             const mappingLabels = Object.keys(response.data[0]);
             const mappingArray = []
 
