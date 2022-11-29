@@ -6,7 +6,7 @@ import { Line } from "react-chartjs-2";
 import axios from 'axios'
 import { UserContext } from '../../context/UserContext';
 
-const V7 = () => {
+const V7 = ({ V10_Data, V7_Data }) => {
 
     const [tableData, setTableData] = useState(null)
     const { user, setUser } = useContext(UserContext)
@@ -14,15 +14,23 @@ const V7 = () => {
     const getData = async () => {
         try {
 
-            const config = {
-                headers: {
-                    'Authorization': `Basic ${user.token}`
+
+            var response = []
+            var responseV10 = []
+
+
+            if (!V10_Data && !V7_Data) {
+                var config = {
+                    headers: {
+                        'Authorization': `Basic ${user.token}`
+                    }
                 }
+                response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V7", config);
+                responseV10 = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V10", config);
+            } else {
+                response.data = V7_Data
+                responseV10.data = V10_Data
             }
-
-            const response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V7", config);
-
-
 
             setTableData({
                 datasets: [
@@ -39,7 +47,7 @@ const V7 = () => {
                         },
                         pointRadius: 0,
                         borderWidth: 1,
-
+                        order: 2
                     },
 
                     {
@@ -55,15 +63,31 @@ const V7 = () => {
                         },
                         pointRadius: 0,
                         borderWidth: 1,
-
+                        order: 3
                     },
+                    {
+                        label: "Human events",
+                        data: responseV10.data.filter(d => d.YearsAgo < 2000000 && 1000 < d.YearsAgo).map(d => ({ xAxis: d.YearsAgo / 1000, value: d.value, event: d.Event })),
+                        borderColor: "black",
+                        backgroundColor: "black",
+                        yAxisID: 'y1',
 
+                        parsing: {
+                            xAxisKey: "xAxis",
+                            yAxisKey: "value",
+                        },
+
+                        borderWidth: 1,
+                        pointRadius: 4,
+                        showLine: false,
+                        order: 1
+                    },
 
                 ],
             })
 
         } catch (error) {
-            console.log("err")
+            console.log(error)
         }
     }
 
@@ -75,7 +99,6 @@ const V7 = () => {
     const options = {
         responsive: true,
         interaction: {
-            mode: 'index',
             intersect: false,
         },
         stacked: false,
@@ -86,6 +109,24 @@ const V7 = () => {
             title: {
                 display: true,
                 text: "Evolution of global temperature over the past two million years",
+            },
+            tooltip: {
+                boxWidth: 10,
+                width: 100,
+                callbacks: {
+                    label: function (item) {
+                        if (item.datasetIndex == 2) {
+                            var substr1 = item.dataset.data[item.dataIndex].event.substr(0, 100)
+                            var substr2 = item.dataset.data[item.dataIndex].event.substr(100 + 1)
+                            if (item.dataset.data[item.dataIndex].event.charAt(99 != " ")) {
+                                substr1 += "-"
+                            }
+                            return [substr1, substr2]
+                        } else {
+                            return item.dataset.label + " :" + item.formattedValue + " CO2"
+                        }
+                    }
+                },
             },
         },
         scales: {

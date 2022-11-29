@@ -6,7 +6,7 @@ import axios from "axios";
 import { UserContext } from "../../context/UserContext";
 
 
-const V6 = () => {
+const V6 = ({ V6Data }) => {
 
 
     const [tableData, setTableData] = useState(null)
@@ -17,15 +17,18 @@ const V6 = () => {
 
         try {
 
-            const config = {
-                headers: {
-                    'Authorization': `Basic ${user.token}`
+            var response = []
+            if (!V6Data) {
+                var config = {
+                    headers: {
+                        'Authorization': `Basic ${user.token}`
+                    }
                 }
+                response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V6", config)
+            } else {
+                response.data = V6Data
             }
 
-            const response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V6", config)
-
-            console.log(response.data)
 
             setTableData({
                 datasets: [

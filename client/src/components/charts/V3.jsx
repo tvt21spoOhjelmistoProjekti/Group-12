@@ -5,7 +5,7 @@ import { Line } from "react-chartjs-2";
 import axios from "axios";
 import { UserContext } from '../../context/UserContext';
 
-const V3_V4 = () => {
+const V3_V4 = ({ V3_V4_data, V10_Data }) => {
     const [tableData, setTableData] = useState(null)
     const { user, setUser } = useContext(UserContext)
 
@@ -14,16 +14,23 @@ const V3_V4 = () => {
     const getData = async () => {
         try {
 
-            const config = {
-                headers: {
-                    'Authorization': `Basic ${user.token}`
+
+            var response = []
+            var response2 = []
+
+            if (!V3_V4_data && !V10_Data) {
+                var config = {
+                    headers: {
+                        'Authorization': `Basic ${user.token}`
+                    }
                 }
+                response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V3_V4", config)
+                response2 = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V10", config)
+            } else {
+                response.data = V3_V4_data
+                response2.data = V10_Data
             }
 
-            const response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V3_V4", config)
-            const response2 = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V10", config)
-            //console.log(response.data.map(d => ({ time: new Date(d.DE08_Year_AD + "-01-01"), value: d.DE08_CO2_Mixing_Ratio })))
-            console.log(response2.data.filter(d => d.Year > 1000).map(d => ({ time: new Date(d.Year + "-01-01"), value: 1 })))
 
 
             setTableData({
@@ -105,7 +112,7 @@ const V3_V4 = () => {
                     },
                     {
                         label: "Human events 1006 -> 1950",
-                        data: response2.data.filter(d => d.Year > 1000).map(d => ({ time: new Date(d.Year + "-01-01"), value: 300, event: d.Event })),
+                        data: response2.data.filter(d => d.Year > 1100).map(d => ({ time: new Date(d.Year + "-01-01"), value: d.value, event: d.Event })),
                         borderColor: "black",
                         backgroundColor: "black",
                         parsing: {
@@ -115,7 +122,7 @@ const V3_V4 = () => {
                         borderWidth: 2,
                         pointRadius: 2,
                         showLine: false,
-                        hidden: false
+                        hidden: true
 
                     },
                 ],
@@ -132,6 +139,7 @@ const V3_V4 = () => {
 
     const options = {
         responsive: true,
+        maintainAspectRatio: false,
         interaction: {
             intersect: false,
         },
@@ -177,7 +185,8 @@ const V3_V4 = () => {
     };
 
     return (
-        <div>{tableData && <Line options={options} data={tableData} />}
+        <div>
+            {tableData && <div className='min-h-[400px]'><Line options={options} data={tableData} /></div>}
             <div className='m-3'>
                 <h1> <p className="font-bold">{"What does this chart show ?"}</p> Line chart results of Atmospheric Carbon Dioxide measurements at Mauna Loa for the past 65 years, and optional data for CO2 measurements compared to 3 different ice sample types starting from year 1006.  </h1>
 
