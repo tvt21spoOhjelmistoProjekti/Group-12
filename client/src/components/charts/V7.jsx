@@ -21,9 +21,6 @@ const V7 = ({ V10_Data, V7_Data }) => {
             var response = []
             var responseV10 = []
 
-            setDescription(response.data[0].description)
-            setData_link(response.data[0].data_link)
-            setDesc_link(response.data[0].desc_link)
 
 
             if (!V10_Data && !V7_Data) {
@@ -38,6 +35,10 @@ const V7 = ({ V10_Data, V7_Data }) => {
                 response.data = V7_Data
                 responseV10.data = V10_Data
             }
+
+            setDescription(response.data[0].description)
+            setData_link(response.data[0].data_link)
+            setDesc_link(response.data[0].desc_link)
 
             setTableData({
                 datasets: [
