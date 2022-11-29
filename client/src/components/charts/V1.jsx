@@ -4,14 +4,15 @@ import "chartjs-adapter-luxon";
 import { Line } from "react-chartjs-2";
 import axios from 'axios'
 import { UserContext } from '../../context/UserContext';
-import 'chartjs-plugin-zoom';
 
-const optionalDesc = "Northern Hemisphere temperature reconstruction for the 1850-1979 years by combining low-resolution proxies with tree-ring data, using a wavelet transform technique to achieve timescale-dependent processing of the data.";
+const optionalDesc = "Northern Hemisphere temperature reconstruction for the 1-1979 years by combining low-resolution proxies with tree-ring data, using a wavelet transform technique to achieve timescale-dependent processing of the data.";
 
 const V1 = ({ v1Data, v2Data }) => {
 
     const [tableData, setTableData] = useState(null)
     const [options, setOptions] = useState(null)
+    const [detailsV1, setDetailsV1] = useState(null)
+    const [detailsV2, setDetailsV2] = useState(null)
 
     const [showMore, setShowMore] = useState(false);
 
@@ -23,7 +24,6 @@ const V1 = ({ v1Data, v2Data }) => {
 
 
         try {
-
             var response = []
             var response2 = []
             const config = {
@@ -38,7 +38,8 @@ const V1 = ({ v1Data, v2Data }) => {
                 response.data = v1Data;
                 response2 = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V2", config);
             }
-
+            setDetailsV1(response.data.filter(d => d.description || d.SourceLink || d.SourceLinkUrl).map(d => ({ desc: d.description, SourceLink: d.SourceLink, SourceLinkUrl: d.SourceLinkUrl })))
+            setDetailsV2(response2.data.filter(d => d.description || d.SourceLink || d.SourceLinkUrl).map(d => ({ desc: d.description, SourceLink: d.SourceLink, SourceLinkUrl: d.SourceLinkUrl })))
             setTableData({
                 datasets: [
                     {
@@ -112,7 +113,7 @@ const V1 = ({ v1Data, v2Data }) => {
                     },
                     {
                         label: "Northern Hemisphere Annual",
-                        data: response.data.filter(d => d.anomaly_nha !== 0).map(d => ({ time: new Date(d.time_nha + "-01-01"), value: d.anomaly_nha })),
+                        data: response.data.filter(d => d.anomaly_nha !== 0).map(d => ({ time: (d.time_nha + "-01-01"), value: d.anomaly_nha })),
                         borderColor: "#000AFF",
                         borderWidth: 1,
                         backgroundColor: "#6A70FF",
@@ -125,7 +126,14 @@ const V1 = ({ v1Data, v2Data }) => {
                     },
                     {
                         label: "(Optional) Northern Hemisphere temperature reconstruction",
-                        data: response2.data.map(d => ({ time: new Date(d.Year + "-01-01"), value: d.T })),
+                        data: response2.data.map(d => {
+
+                            if (d.Year < 10) {
+                                return { time: new Date("000" + d.Year + "-01-01"), value: d.T }
+                            } else {
+                                return { time: new Date("00" + d.Year + "-01-01"), value: d.T }
+                            }
+                        }),
                         borderColor: "#f64aff",
                         borderWidth: 2,
                         backgroundColor: "#f64aaa",
@@ -133,7 +141,7 @@ const V1 = ({ v1Data, v2Data }) => {
                             xAxisKey: "time",
                             yAxisKey: "value",
                         },
-                        pointRadius: 1,
+                        pointRadius: 0,
                         hidden: true
                     },
                 ],
@@ -142,7 +150,6 @@ const V1 = ({ v1Data, v2Data }) => {
             setOptions({
                 responsive: true,
                 interaction: {
-                    mode: 'index',
                     intersect: false,
                 },
                 stacked: false,
@@ -155,16 +162,17 @@ const V1 = ({ v1Data, v2Data }) => {
                         text: "Temperature Anomalies from 1850",
                     },
                     zoom: {
-                        pan: {
-                            enabled: true,
-                            mode: 'x',
-                        },
                         zoom: {
-                            enabled: true,
-                            drag: true,
-                            mode: 'xy'
+                            wheel: {
+                                enabled: true,
+                            },
+                            pinch: {
+                                enabled: true
+                            },
+                            mode: 'xy',
                         }
                     }
+
 
                 },
                 scales: {
@@ -194,31 +202,42 @@ const V1 = ({ v1Data, v2Data }) => {
 
 
     return (
-        <div>
+        <>{tableData &&
             <div>
-                {tableData && <Line options={options} data={tableData} />}
-            </div>
-            <div className='m-3'>
-                <h1> <p className="font-bold">{"(Optional data)"}</p> {showMore ? optionalDesc : `${optionalDesc.substring(0, 100)}`}</h1>
-
-                <div className={showMore ? 'flex' : 'hidden'}>
-                    <ul className='mt-3 list-disc'>
-                        <label className='font-semibold'>Sources</label>
-                        <li className='ml-5'>
-                            <a href='https://www.metoffice.gov.uk/hadobs/hadcrut5/'>Temperature Anomalies from 1850</a>
-                        </li>
-                        <li className='ml-5'>
-                            <a href='https://bolin.su.se/data/moberg-2012-nh-1?n=moberg-2005'>Optional data</a>
-                        </li>
-                        <li className='ml-5'>
-                            <a href='https://gml.noaa.gov/ccgg/about/co2_measurements.html'>Optional data measurement description</a>
-                        </li>
-                    </ul>
+                <div>
+                    <Line options={options} data={tableData} />
                 </div>
+                <div className='m-3'>
+                    <p className="font-bold">Description</p>
+                    <p>{detailsV1[0].desc}</p>
+                    <h1> <p className="font-bold">{"(Optional data)"}</p> {showMore ? detailsV2[0].desc : `${detailsV2[0].desc.substring(0, 100)}`}</h1>
 
-                <h1 onClick={() => setShowMore(!showMore)} className='cursor-pointer text-blue-500 mt-3'>{showMore ? "Show Less" : " Show More"}</h1>
-            </div>
-        </div>
+                    <div className={showMore ? 'flex' : 'hidden'}>
+                        <ul className='mt-3 list-disc'>
+                            <label className='font-semibold'>Sources</label>
+
+                            {detailsV1.map((data, index) => {
+                                return (
+                                    <li className='ml-5' key={index}>
+                                        <a href={data.SourceLinkUrl}>{data.SourceLink}</a>
+                                    </li>
+                                )
+                            })}
+                            {detailsV2.map((data, index) => {
+                                return (
+                                    <li className='ml-5' key={index}>
+                                        <a href={data.SourceLinkUrl}>{data.SourceLink}</a>
+                                    </li>
+                                )
+                            })}
+
+
+                        </ul>
+                    </div>
+
+                    <h1 onClick={() => setShowMore(!showMore)} className='cursor-pointer text-blue-500 mt-3'>{showMore ? "Show Less" : " Show More"}</h1>
+                </div>
+            </div>} </>
     )
 }
 

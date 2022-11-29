@@ -23,20 +23,12 @@ router.post('/create', (req, res) => {
         console.log("here")
         const randomUrl = makeid(15);
 
-        publicVisualizations.createPublicVisualization(randomUrl, userID, (dbError, dbresult) => {
+        publicVisualizations.createVisualization(userID, randomUrl, visu, title, description, columns, (dbError, dbresult) => {
             if (dbresult) {
-                //res.send(dbresult)
-                publicVisualizations.createVisualization(randomUrl, visu, title, description, columns, (dbError, dbresult) => {
-                    if (dbresult) {
-                        res.send(randomUrl)
-                    }
-                    else {
-                        res.send(dbError)
-                    }
-                })
+                res.send(randomUrl)
             }
             else {
-                res.send("userID Error")
+                res.send(dbError)
             }
         })
 
