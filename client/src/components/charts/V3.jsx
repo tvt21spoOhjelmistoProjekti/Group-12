@@ -31,7 +31,7 @@ const V3_V4 = ({ V3_V4_data, V10_Data }) => {
                 response2.data = V10_Data
             }
 
-
+            console.log(response2)
 
             setTableData({
                 datasets: [

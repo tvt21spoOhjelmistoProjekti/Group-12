@@ -45,9 +45,9 @@ const V8 = ({ V8_Data }) => {
 
             mappingLabels.map(c => {
 
-                
-                if(c != "Year" && c != "description" && c != "data_link" && c != "desc_link"){
-                    mappingArray.push(response.data.map(d => ({ xAxis: d.Year, value: d[c], country: c})))
+
+                if (c != "Year" && c != "description" && c != "data_link" && c != "desc_link") {
+                    mappingArray.push(response.data.map(d => ({ xAxis: d.Year, value: d[c], country: c })))
 
                 }
             })
@@ -132,16 +132,16 @@ const V8 = ({ V8_Data }) => {
     };
 
     return (
-        
-        <div className='max-h-[1300px]'>{tableData && <Line options={options} data={tableData} />}
+
+        <div className='h-auto'>{tableData && <div className='h-[1500px]'><Line options={options} data={tableData} /></div>}
             <div className='pt-2 pl-3 text-justify'>
-            <p>{description}</p>
-                    <div className='pt-5 font-bold font-sans hover:font-extrabold text-blue-500'>
-                        <a href={desc_link} target="_blank">Study description</a>
-                    </div>
-                    <div className='pt-5 font-bold font-sans hover:font-extrabold text-blue-500'>
-                        <a href={data_link} target="_blank">Dataset</a>
-                    </div>
+                <p>{description}</p>
+                <div className='pt-5 font-bold font-sans hover:font-extrabold text-blue-500'>
+                    <a href={desc_link} target="_blank">Study description</a>
+                </div>
+                <div className='pt-5 font-bold font-sans hover:font-extrabold text-blue-500'>
+                    <a href={data_link} target="_blank">Dataset</a>
+                </div>
 
             </div>
         </div>

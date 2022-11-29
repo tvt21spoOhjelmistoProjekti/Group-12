@@ -29,16 +29,6 @@ const V5 = ({ V5_Data }) => {
                 response.data = V5_Data;
             }
 
-
-
-        try {   
-                const config = {
-                    headers: {
-                        'Authorization': `Basic ${user.token}`
-                    }
-                }               
-                const response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V5_Data", config);
-            
             setDescription(response.data[0].description)
             setData_link(response.data[0].data_link)
             setDesc_link(response.data[0].desc_link)
@@ -137,12 +127,12 @@ const V5 = ({ V5_Data }) => {
             {tableData && <Line options={options} data={tableData} />}
             <div className='pt-2 px-3 text-justify'>
                 <p>{description}</p>
-                    <div className='pt-5 font-bold font-sans hover:font-extrabold text-blue-500'>
-                        <a href={desc_link} target="_blank">Study description</a>
-                    </div>
-                    <div className='pt-5 font-bold font-sans hover:font-extrabold text-blue-500'>
-                        <a href={data_link} target="_blank">Dataset</a>
-                    </div>
+                <div className='pt-5 font-bold font-sans hover:font-extrabold text-blue-500'>
+                    <a href={desc_link} target="_blank">Study description</a>
+                </div>
+                <div className='pt-5 font-bold font-sans hover:font-extrabold text-blue-500'>
+                    <a href={data_link} target="_blank">Dataset</a>
+                </div>
 
             </div>
         </div>
