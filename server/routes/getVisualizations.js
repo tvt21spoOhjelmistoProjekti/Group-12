@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const publicVisualizations = require('../models/visualization_model')
 const chartData = require('../models/data_model');
+const { response } = require('express');
 
 
 router.get('/:url', async (req, res) => {
@@ -10,24 +11,26 @@ router.get('/:url', async (req, res) => {
             if (dbErr) {
                 res.send("err")
             } else {
+                if (dbresult.length <= 0) {
+                    res.send("wrong url")
+                    return
+                }
                 const visalizations = dbresult[0].visualizations;
                 const splitedVisual = visalizations.split(",")
-                var returnArray = []
-                returnArray.push({
+                var returnObj = {}
+                returnObj = {
                     details: {
                         title: dbresult[0].title,
                         description: dbresult[0].description,
                         columns: dbresult[0].columns
                     }
-                })
+                }
 
                 function getData(tableName) {
                     return new Promise((resolve, rejected) => {
                         chartData.getTable(tableName, (dbErr, dbresult) => {
                             if (dbErr) rejected(dbErr)
-                            console.log("success")
-                            const newArray = { [tableName]: dbresult }
-                            returnArray.push(newArray)
+                            returnObj = { ...returnObj, [tableName]: dbresult }
                             resolve(dbresult)
                         })
                     })
@@ -36,7 +39,7 @@ router.get('/:url', async (req, res) => {
                     await getData(splitedVisual[i])
                 }
 
-                res.send(returnArray)
+                res.send(returnObj)
 
             }
         })

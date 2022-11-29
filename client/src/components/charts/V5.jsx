@@ -5,7 +5,7 @@ import { Line } from "react-chartjs-2";
 import axios from 'axios'
 import { UserContext } from '../../context/UserContext';
 
-const V5 = ({chartData}) => {
+const V5 = ({ chartData }) => {
 
     const [tableData, setTableData] = useState(null)
     const { user, setUser } = useContext(UserContext)
@@ -14,6 +14,7 @@ const V5 = ({chartData}) => {
     const [desc_link, setDesc_link] = useState("")
 
     const getData = async () => {
+
         try {   
                 const config = {
                     headers: {
@@ -25,6 +26,7 @@ const V5 = ({chartData}) => {
             setDescription(response.data[0].description)
             setData_link(response.data[0].data_link)
             setDesc_link(response.data[0].desc_link)
+
 
             setTableData({
                 datasets: [
@@ -77,13 +79,16 @@ const V5 = ({chartData}) => {
         interaction: {
             mode: 'index',
             intersect: false,
-          },
-          stacked: false,
+        },
+        stacked: false,
         plugins: {
             tooltip: {
                 callbacks: {
-                    label: (item) =>
-                        `${item.dataset.label == "Depth (m)" ? "Depth" : "CO2 Concentration"}: ${item.formattedValue} ${item.dataset.label == "Depth (m)" ? "m" : "ppmv"}`,
+                    label: function (item) {
+                        console.log(item)
+                        let returnValue = `${item.dataset.label == "Depth (m)" ? "Depth" : "CO2 Concentration"}: ${item.formattedValue} ${item.dataset.label == "Depth (m)" ? "m" : "ppmv"}`
+                        return returnValue
+                    }
                 },
             },
             legend: {
@@ -113,7 +118,7 @@ const V5 = ({chartData}) => {
 
     return (
         <div className='max-w-[1000px]'>
-                {tableData && <Line options={options} data={tableData} />}
+            {tableData && <Line options={options} data={tableData} />}
             <div className='pt-2 px-3 text-justify'>
                 <p>{description}</p>
                     <div className='pt-5 font-bold font-sans hover:font-extrabold text-blue-500'>
@@ -122,6 +127,7 @@ const V5 = ({chartData}) => {
                     <div className='pt-5 font-bold font-sans hover:font-extrabold text-blue-500'>
                         <a href={data_link} target="_blank">Dataset</a>
                     </div>
+
             </div>
         </div>
     )
