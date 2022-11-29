@@ -73,7 +73,7 @@ const SharedVisualization = () => {
                 </div>
             </div>
 
-            <div className={details.columns == 2 ? 'px-8 w-screen lg:w-2/5 flex flex-col space-y-8' : 'grid grid-cols-1 lg:grid-cols-2 gap-10 xl:px-20'}>
+            <div className={details.columns == 1 ? 'px-8 w-screen lg:w-2/5 flex flex-col space-y-8' : 'grid grid-cols-1 lg:grid-cols-2 gap-10 xl:px-20'}>
                 {chartData}
             </div>
         </div>

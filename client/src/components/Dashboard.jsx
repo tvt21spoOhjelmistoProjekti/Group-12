@@ -40,13 +40,13 @@ const Dashboard = () => {
                         <V5 />
                     </div>
                     <div className='w-full bg-white rounded shadow-xl '>
+                        <V6 />
+                    </div>
+                    <div className='w-full bg-white rounded shadow-xl '>
                         <V7 />
                     </div>
                     <div className='w-full bg-white rounded shadow-xl '>
                         <V8 />
-                    </div>
-                    <div className='w-full bg-white rounded shadow-xl '>
-                        <V6 />
                     </div>
                     <div className='w-full bg-white rounded shadow-xl '>
                         <V9 />

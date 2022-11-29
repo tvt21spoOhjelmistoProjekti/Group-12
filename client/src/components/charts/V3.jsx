@@ -8,7 +8,7 @@ import { UserContext } from '../../context/UserContext';
 const V3_V4 = () => {
     const [tableData, setTableData] = useState(null)
     const { user, setUser } = useContext(UserContext)
-    
+
 
 
     const getData = async () => {
@@ -21,8 +21,9 @@ const V3_V4 = () => {
             }
 
             const response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V3_V4", config)
-            console.log(response.data.map(d => ({ time: new Date(d.DE08_Year_AD + "-01-01"), value: d.DE08_CO2_Mixing_Ratio })))
-            //console.log(response.data)
+            const response2 = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V10", config)
+            //console.log(response.data.map(d => ({ time: new Date(d.DE08_Year_AD + "-01-01"), value: d.DE08_CO2_Mixing_Ratio })))
+            console.log(response2.data.filter(d => d.Year > 1000).map(d => ({ time: new Date(d.Year + "-01-01"), value: 1 })))
 
 
             setTableData({
@@ -33,7 +34,7 @@ const V3_V4 = () => {
                         borderColor: "black",
                         backgroundColor: "grey",
                         borderWidth: 2,
-                        
+
 
                         parsing: {
                             xAxisKey: "time",
@@ -70,9 +71,9 @@ const V3_V4 = () => {
                         hidden: true
 
                     },
-                        
-                    
-                   {
+
+
+                    {
                         label: "Optional DE",
                         data: response.data.filter(d => d.DE_Year_AD != 0).map(d => ({ time: new Date(d.DE_Year_AD + "-01-01"), value: d.DE_CO2_Mixing_Ratio })),
                         borderColor: "purple",
@@ -102,6 +103,21 @@ const V3_V4 = () => {
                         hidden: true
 
                     },
+                    {
+                        label: "Human events 1006 -> 1950",
+                        data: response2.data.filter(d => d.Year > 1000).map(d => ({ time: new Date(d.Year + "-01-01"), value: 300, event: d.Event })),
+                        borderColor: "black",
+                        backgroundColor: "black",
+                        parsing: {
+                            xAxisKey: "time",
+                            yAxisKey: "value",
+                        },
+                        borderWidth: 2,
+                        pointRadius: 2,
+                        showLine: false,
+                        hidden: false
+
+                    },
                 ],
             })
         } catch (error) {
@@ -114,14 +130,31 @@ const V3_V4 = () => {
     }, [])
 
 
-     const options = {
+    const options = {
         responsive: true,
         interaction: {
-            mode: 'index',
             intersect: false,
-          },
-          stacked: false,
+        },
+        stacked: false,
         plugins: {
+            tooltip: {
+                boxWidth: 10,
+                width: 100,
+                callbacks: {
+                    label: function (item) {
+                        if (item.datasetIndex == 5) {
+                            var substr1 = item.dataset.data[item.dataIndex].event.substr(0, 100)
+                            var substr2 = item.dataset.data[item.dataIndex].event.substr(100 + 1)
+                            if (item.dataset.data[item.dataIndex].event.charAt(99 != " ")) {
+                                substr1 += "-"
+                            }
+                            return [substr1, substr2]
+                        } else {
+                            return item.dataset.label + " :" + item.formattedValue + " CO2"
+                        }
+                    }
+                },
+            },
             legend: {
                 position: "top",
             },
@@ -145,26 +178,26 @@ const V3_V4 = () => {
 
     return (
         <div>{tableData && <Line options={options} data={tableData} />}
-        <div className='m-3'>
-        <h1> <p className="font-bold">{"What does this chart show ?"}</p> Line chart results of Atmospheric Carbon Dioxide measurements at Mauna Loa for the past 65 years, and optional data for CO2 measurements compared to 3 different ice sample types starting from year 1006.  </h1>
+            <div className='m-3'>
+                <h1> <p className="font-bold">{"What does this chart show ?"}</p> Line chart results of Atmospheric Carbon Dioxide measurements at Mauna Loa for the past 65 years, and optional data for CO2 measurements compared to 3 different ice sample types starting from year 1006.  </h1>
 
-        <ul className='mt-3 list-disc'>
-            <label className='font-semibold'>Sources</label>
-            <li className='ml-5'>
-                <a href='https://gml.noaa.gov/ccgg/trends/'>Data source for annual and monthly data.</a>
-            </li>
-            <li className='ml-5'>
-                <a href='https://gml.noaa.gov/ccgg/about/co2_measurements.html'>Measurement description. </a>
-            </li>
-            <li className='ml-5'>
-                <a href='https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/lawdome.combined.dat'>Data source for optional data.</a>
-            </li>
-            <li className='ml-5'>
-                <a href='https://cdiac.ess-dive.lbl.gov/trends/co2/vostok.html'>Optional data measurement description.</a>
-            </li>
-        </ul>
+                <ul className='mt-3 list-disc'>
+                    <label className='font-semibold'>Sources</label>
+                    <li className='ml-5'>
+                        <a href='https://gml.noaa.gov/ccgg/trends/'>Data source for annual and monthly data.</a>
+                    </li>
+                    <li className='ml-5'>
+                        <a href='https://gml.noaa.gov/ccgg/about/co2_measurements.html'>Measurement description. </a>
+                    </li>
+                    <li className='ml-5'>
+                        <a href='https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/lawdome.combined.dat'>Data source for optional data.</a>
+                    </li>
+                    <li className='ml-5'>
+                        <a href='https://cdiac.ess-dive.lbl.gov/trends/co2/vostok.html'>Optional data measurement description.</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
     )
 }
 
