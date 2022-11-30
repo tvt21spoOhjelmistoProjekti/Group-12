@@ -7,7 +7,7 @@ import { UserContext } from '../../context/UserContext';
 
 const V5 = ({ V5_Data }) => {
 
-    const [tableData, setTableData] = useState(null)
+    const [tableData, setTableData] = useState(null)                                    //Declaring variables
     const { user, setUser } = useContext(UserContext)
     const [description, setDescription] = useState("")
     const [data_link, setData_link] = useState("")
@@ -19,18 +19,18 @@ const V5 = ({ V5_Data }) => {
             var response = []
 
             if (!V5_Data) {
-                var config = {
+                var config = {                                                              //Checking that user it authorized
                     headers: {
                         'Authorization': `Basic ${user.token}`
                     }
                 }
-                response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V5_Data", config);
+                response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V5_Data", config);        //Getting chartdata from db
             } else {
                 response.data = V5_Data;
             }
 
             setDescription(response.data[0].description)
-            setData_link(response.data[0].data_link)
+            setData_link(response.data[0].data_link)                                            //Setting description and extra links from db to variables
             setDesc_link(response.data[0].desc_link)
 
 
@@ -38,7 +38,7 @@ const V5 = ({ V5_Data }) => {
                 datasets: [
                     {
                         label: "Depth (m)",
-                        data: response.data.map(d => ({ xAxis: d.age_mean, value: d.depth })),
+                        data: response.data.map(d => ({ xAxis: d.age_mean, value: d.depth })),                  //Mapping through database to setup dataset for chart
                         borderColor: "black",
                         backgroundColor: "black",
 
@@ -53,7 +53,7 @@ const V5 = ({ V5_Data }) => {
 
                     {
                         label: "CO2 Concentration (ppmv)",
-                        data: response.data.map(d => ({ xAxis: d.age_mean, value: d.co2 })),
+                        data: response.data.map(d => ({ xAxis: d.age_mean, value: d.co2 })),                //Setting up second dataset
                         borderColor: "blue",
                         backgroundColor: "blue",
 
@@ -71,7 +71,7 @@ const V5 = ({ V5_Data }) => {
             })
 
         } catch (error) {
-            console.log(error)
+            console.log(error)                                                          //Catch in case of error
         }
     }
 
@@ -87,7 +87,7 @@ const V5 = ({ V5_Data }) => {
             intersect: false,
         },
         stacked: false,
-        plugins: {
+        plugins: {                                                                          //Chart options for the layout and ui
             tooltip: {
                 callbacks: {
                     label: function (item) {
@@ -114,7 +114,7 @@ const V5 = ({ V5_Data }) => {
                 },
 
             },
-            yAxis: {
+            yAxis: {                                                                    //Setting the y axis to be logarithmic
                 type: "logarithmic",
 
 
@@ -124,18 +124,18 @@ const V5 = ({ V5_Data }) => {
 
     return (
         <div className='max-w-[1000px]'>
-            {tableData && <Line options={options} data={tableData} />}
+            {tableData && <Line options={options} data={tableData} />}                       
             <div className='pt-2 px-3 text-justify'>
-                <p>{description}</p>
+                <p>{description}</p>                                                                                    
                 <div className='pt-5 font-bold font-sans hover:font-extrabold text-blue-500'>
                     <a href={desc_link} target="_blank">Study description</a>
                 </div>
                 <div className='pt-5 font-bold font-sans hover:font-extrabold text-blue-500'>
                     <a href={data_link} target="_blank">Dataset</a>
-                </div>
-
-            </div>
-        </div>
+                </div>                                                                              
+                                                                                                            
+            </div>  
+        </div>                                                                                      //Writing the html code to show chart, description and links
     )
 }
 
