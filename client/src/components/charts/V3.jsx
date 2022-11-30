@@ -216,7 +216,7 @@ const V3_V4 = ({ V3_V4_data, V10_Data }) => {
                  <a className='font-sans hover:font-extrabold text-blue-500' href={dataLink_Monthly}>Data Monthly</a>
                  </div>
                  <div>
-                 <a className='font-sans hover:font-extrabold text-blue-500' href={sourceLinkUrl}>Description</a>
+                 <a className='font-sans hover:font-extrabold text-blue-500' href={sourceLinkUrl}>Measurements</a>
                  </div>
                  <div>
                  <a className=' font-sans hover:font-extrabold text-blue-500' href={dataLink_optional}>Optional data</a>
