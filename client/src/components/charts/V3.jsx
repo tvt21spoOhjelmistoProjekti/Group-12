@@ -8,6 +8,13 @@ import { UserContext } from '../../context/UserContext';
 const V3_V4 = ({ V3_V4_data, V10_Data }) => {
     const [tableData, setTableData] = useState(null)
     const { user, setUser } = useContext(UserContext)
+    const [description, setDescription] = useState([])
+    const [dataLink_Annual, setDataLink_Annual] = useState([])
+    const [dataLink_Monthly, setDataLink_Monthly] = useState([])
+    const [sourceLinkUrl, setSourceLinkUrl] = useState([])
+    const [description_optional, setDescription_optional] = useState([])
+    const [dataLink_optional, setDataLink_optional] = useState([])
+    const [sourceLinkUrl_optional, setSourceLinkUrl_optional] = useState([])
 
 
 
@@ -24,14 +31,20 @@ const V3_V4 = ({ V3_V4_data, V10_Data }) => {
                         'Authorization': `Basic ${user.token}`
                     }
                 }
+ 
                 response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V3_V4", config)
                 response2 = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V10", config)
             } else {
                 response.data = V3_V4_data
                 response2.data = V10_Data
             }
-
-            console.log(response2)
+            setDescription(response.data[0].description)
+            setDataLink_Annual(response.data[0].dataLink_Annual)
+            setDataLink_Monthly(response.data[0].dataLink_Monthly)
+            setSourceLinkUrl(response.data[0].sourceLinkUrl)
+            setDescription_optional(response.data[0].description_optional)
+            setDataLink_optional(response.data[0].dataLink_optional)
+            setSourceLinkUrl_optional(response.data[0].sourceLinkUrl_optional)
 
             setTableData({
                 datasets: [
@@ -186,27 +199,39 @@ const V3_V4 = ({ V3_V4_data, V10_Data }) => {
 
     return (
         <div>
-            {tableData && <div className='min-h-[400px]'><Line options={options} data={tableData} /></div>}
-            <div className='m-3'>
-                <h1> <p className="font-bold">{"What does this chart show ?"}</p> Line chart results of Atmospheric Carbon Dioxide measurements at Mauna Loa for the past 65 years, and optional data for CO2 measurements compared to 3 different ice sample types starting from year 1006.  </h1>
+            {tableData && <div className='min-h-[500px]'><Line options={options} data={tableData} /></div>}
+            <div className='pt-2 px-3 text-justify'>
+                <h1 className=' font-semibold'>Description</h1>
+                 <p>{description}</p>  
+                 <div>
+                    <h1 className=' pt-5 font-semibold'>Description for optional data</h1>
+                    <p>{description_optional}</p>
+                 </div>
+                 
+                 <p className='font-semibold'>Sources</p>
+                 <div>
+                 <a className=' font-sans hover:font-extrabold text-blue-500' href={dataLink_Annual}>Data Annual</a>
+                 </div>
+                 <div>
+                 <a className='font-sans hover:font-extrabold text-blue-500' href={dataLink_Monthly}>Data Monthly</a>
+                 </div>
+                 <div>
+                 <a className='font-sans hover:font-extrabold text-blue-500' href={sourceLinkUrl}>Description</a>
+                 </div>
+                 <div>
+                 <a className=' font-sans hover:font-extrabold text-blue-500' href={dataLink_optional}>Optional data</a>
+                 </div>
+                 <div>
+                 <a className='  font-sans hover:font-extrabold text-blue-500' href={sourceLinkUrl_optional}>Optional description</a>
+                 </div>
+                 
 
-                <ul className='mt-3 list-disc'>
-                    <label className='font-semibold'>Sources</label>
-                    <li className='ml-5'>
-                        <a href='https://gml.noaa.gov/ccgg/trends/'>Data source for annual and monthly data.</a>
-                    </li>
-                    <li className='ml-5'>
-                        <a href='https://gml.noaa.gov/ccgg/about/co2_measurements.html'>Measurement description. </a>
-                    </li>
-                    <li className='ml-5'>
-                        <a href='https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/lawdome.combined.dat'>Data source for optional data.</a>
-                    </li>
-                    <li className='ml-5'>
-                        <a href='https://cdiac.ess-dive.lbl.gov/trends/co2/vostok.html'>Optional data measurement description.</a>
-                    </li>
-                </ul>
+                 
+                
+                </div>
+
             </div>
-        </div>
+
     )
 }
 
