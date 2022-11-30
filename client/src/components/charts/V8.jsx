@@ -11,14 +11,12 @@ const V8 = ({ V8_Data }) => {
     const [tableData, setTableData] = useState(null)
     const { user, setUser } = useContext(UserContext)
     const [description, setDescription] = useState("")
-    const [data_link, setData_link] = useState("")
+    const [data_link, setData_link] = useState("")                                              //Declaring variables
     const [desc_link, setDesc_link] = useState("")
-
-    var randomColor = Math.floor(Math.random() * 16777215).toString(16);
 
     var colors = []
     for (var i = 0; i < 300; i++) {
-        colors.push("#" + Math.floor(Math.random() * 16777215).toString(16))
+        colors.push("#" + Math.floor(Math.random() * 16777215).toString(16))                        //Making an array of 300 random colors
     }
 
     const getData = async () => {
@@ -29,10 +27,10 @@ const V8 = ({ V8_Data }) => {
             if (!V8_Data) {
                 var config = {
                     headers: {
-                        'Authorization': `Basic ${user.token}`
+                        'Authorization': `Basic ${user.token}`                                      //Checking that user it authorized
                     }
                 }
-                response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V8", config);
+                response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V8", config);     //Getting chartdata from db
             } else {
                 response.data = V8_Data
             }
@@ -40,14 +38,14 @@ const V8 = ({ V8_Data }) => {
             const mappingArray = []
 
             setDescription(response.data[0].description)
-            setData_link(response.data[0].data_link)
+            setData_link(response.data[0].data_link)                                            //Setting description and link variables
             setDesc_link(response.data[0].desc_link)
 
             mappingLabels.map(c => {
 
 
-                if (c != "Year" && c != "description" && c != "data_link" && c != "desc_link") {
-                    mappingArray.push(response.data.map(d => ({ xAxis: d.Year, value: d[c], country: c })))
+                if (c != "Year" && c != "description" && c != "data_link" && c != "desc_link") {                            //Filtering out not needed labels
+                    mappingArray.push(response.data.map(d => ({ xAxis: d.Year, value: d[c], country: c })))                 //Creating an array of labels
 
                 }
             })
@@ -56,7 +54,7 @@ const V8 = ({ V8_Data }) => {
             setTableData({
                 datasets: mappingArray.map(c => {
 
-                    return {
+                    return {                                                                                            //Setup for the datasets
                         label: c[0].country,
                         data: c.map(d => ({ xAxis: d.xAxis, value: d.value * 3.664 })),
                         borderColor: colors,
@@ -90,7 +88,7 @@ const V8 = ({ V8_Data }) => {
         maintainAspectRatio: false,
 
         plugins: {
-            legend: {
+            legend: {                                                                                           //Chart options for ui and layout
                 position: "top",
                 labels: {
                     boxWidth: 10,
@@ -132,7 +130,7 @@ const V8 = ({ V8_Data }) => {
     };
 
     return (
-
+                                                                                                                                                                //Html code to export
         <div className='h-auto'>{tableData && <div className='h-[1500px]'><Line options={options} data={tableData} /></div>}
             <div className='pt-2 pl-3 text-justify'>
                 <p>{description}</p>
@@ -145,7 +143,7 @@ const V8 = ({ V8_Data }) => {
 
             </div>
         </div>
-
+                                                                                                                                                                            
     )
 
 }

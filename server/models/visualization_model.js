@@ -6,6 +6,9 @@ const publicVisualizations = {
     },
     getVisualizationsbyUrl: async function (url, callback) {
         return db.query('SELECT * FROM visualizationsAndUrl where url= ?', [url], callback);
+    },
+    deleteUsersVisualizations: function(userID, callback) {
+        return db.query('DELETE FROM visualizationsAndUrl WHERE userID = ?', [userID], callback);
     }
 };
 
