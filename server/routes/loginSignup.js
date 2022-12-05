@@ -11,7 +11,7 @@ router.post('/', function (request, response) {
         const password = request.body.password;
         login.checkPassword(username, function (dbError, dbresult) {
             if (dbError) {
-                response.send(dbError)
+                response.send("database error")
             }
             else {
                 if (dbresult.length > 0) {
@@ -30,6 +30,8 @@ router.post('/', function (request, response) {
                             response.send("wrong password")
                         }
                     })
+                } else {
+                    response.send("Username does not exist")
                 }
             }
         })
