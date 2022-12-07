@@ -19,9 +19,10 @@ const Login = ({ onSubmitForTest }) => {
         e.preventDefault();
 
 
+
         if (onSubmitForTest) {
             onSubmitForTest({
-                status: "logged_in"
+                status: "true"
             })
         }
 
