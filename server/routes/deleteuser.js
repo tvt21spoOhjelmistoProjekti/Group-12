@@ -1,21 +1,26 @@
 const express = require('express');
 const deleteuser = require('../models/login_model');
 const router = express.Router();
+const publicVisualizations = require('../models/visualization_model')
 
 router.post('/', function (request, response) {
-    console.log("joo")
-    if (request.body.username) {
-        const username = request.body.username;
+    if (request.body.userID) {
+        const userID = request.body.userID;
 
-        deleteuser.deleteuser(request.body.username, function (dberr, dbresult) {
+        publicVisualizations.deleteUsersVisualizations(userID, function (dberr, dbresult) {
             if (dberr) {
-                response.send('err')
+                response.send(dberr)
             }
             else {
-                const returnobj = {
-                    username: request.body.username
-                }
-                response.send(returnobj)
+                deleteuser.deleteuser(userID, function (dberr, dbresult)  {
+                    if (dberr) {
+                        response.send(dberr)
+                    }
+                    else {
+                        
+                        response.send(true)
+                    }
+                })
             }
         })
     }

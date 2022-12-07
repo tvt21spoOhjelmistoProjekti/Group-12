@@ -1,22 +1,45 @@
-import React from 'react'
-import { useState } from 'react'
-import { useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { Chart } from "chart.js/auto";
 import "chartjs-adapter-luxon";
 import { Line } from "react-chartjs-2";
 import axios from 'axios'
+import { UserContext } from '../../context/UserContext';
 
-const V1 = () => {
+const optionalDesc = "Northern Hemisphere temperature reconstruction for the 1-1979 years by combining low-resolution proxies with tree-ring data, using a wavelet transform technique to achieve timescale-dependent processing of the data.";
+
+const V1 = ({ v1Data, v2Data }) => {
 
     const [tableData, setTableData] = useState(null)
+    const [options, setOptions] = useState(null)
+    const [detailsV1, setDetailsV1] = useState(null)
+    const [detailsV2, setDetailsV2] = useState(null)
 
-    const getData = async () => {
+    const [showMore, setShowMore] = useState(false);
+
+    const { user, setUser } = useContext(UserContext)
+
+
+
+    const getData = async (v1Data, v2Data) => {
+
+
         try {
-            const response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V1");
-            const response2 = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V2");
-
-
-
+            var response = []
+            var response2 = []
+            if (!v1Data && !v2Data) {
+                var config = {
+                    headers: {
+                        'Authorization': `Basic ${user.token}`
+                    }
+                }
+                response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V1", config);
+                response2 = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V2", config);
+            } else {
+                response.data = v1Data;
+                response2.data = v2Data
+            }
+            setDetailsV1(response.data.filter(d => d.description || d.SourceLink || d.SourceLinkUrl).map(d => ({ desc: d.description, SourceLink: d.SourceLink, SourceLinkUrl: d.SourceLinkUrl })))
+            setDetailsV2(response2.data.filter(d => d.description || d.SourceLink || d.SourceLinkUrl).map(d => ({ desc: d.description, SourceLink: d.SourceLink, SourceLinkUrl: d.SourceLinkUrl })))
             setTableData({
                 datasets: [
                     {
@@ -90,7 +113,7 @@ const V1 = () => {
                     },
                     {
                         label: "Northern Hemisphere Annual",
-                        data: response.data.filter(d => d.anomaly_nha !== 0).map(d => ({ time: new Date(d.time_nha + "-01-01"), value: d.anomaly_nha })),
+                        data: response.data.filter(d => d.anomaly_nha !== 0).map(d => ({ time: (d.time_nha + "-01-01"), value: d.anomaly_nha })),
                         borderColor: "#000AFF",
                         borderWidth: 1,
                         backgroundColor: "#6A70FF",
@@ -102,57 +125,120 @@ const V1 = () => {
 
                     },
                     {
-                        label: "Optional",
-                        data: response2.data.map(d => ({ time: new Date(d.Year + "-01-01"), value: d.T })),
-                        borderColor: "yellow",
-                        borderWidth: 1,
-                        backgroundColor: "yellow",
+                        label: "(Optional) Northern Hemisphere temperature reconstruction",
+                        data: response2.data.map(d => {
+
+                            if (d.Year < 10) {
+                                return { time: new Date("000" + d.Year + "-01-01"), value: d.T }
+                            } else {
+                                return { time: new Date("00" + d.Year + "-01-01"), value: d.T }
+                            }
+                        }),
+                        borderColor: "#f64aff",
+                        borderWidth: 2,
+                        backgroundColor: "#f64aaa",
                         parsing: {
                             xAxisKey: "time",
                             yAxisKey: "value",
                         },
-                        pointRadius: 1,
+                        pointRadius: 0,
                         hidden: true
                     },
                 ],
             })
 
+            setOptions({
+                maintainAspectRatio: false,
+                responsive: true,
+                interaction: {
+                    intersect: false,
+                },
+                stacked: false,
+                plugins: {
+                    legend: {
+                        position: "top",
+                    },
+                    title: {
+                        display: true,
+                        text: "Temperature Anomalies from 1850",
+                    },
+                    zoom: {
+                        zoom: {
+                            wheel: {
+                                enabled: true,
+                            },
+                            pinch: {
+                                enabled: true
+                            },
+                            mode: 'xy',
+                        }
+                    }
+
+
+                },
+                scales: {
+                    x: {
+                        type: "time",
+                        time: {
+                            unit: "month",
+                        },
+                    },
+                    yAxis: {
+                        type: "linear",
+                    },
+                },
+
+            })
+
         } catch (error) {
-            console.log("err")
+            console.log(error)
         }
     }
 
     useEffect(() => {
-        getData()
+        getData(v1Data, v2Data)
+
     }, [])
 
 
-    const options = {
-        responsive: true,
-        plugins: {
-            legend: {
-                position: "top",
-            },
-            title: {
-                display: true,
-                text: "Temperature Anomalies from 1850",
-            },
-        },
-        scales: {
-            x: {
-                type: "time",
-                time: {
-                    unit: "month",
-                },
-            },
-            yAxis: {
-                type: "linear",
-            },
-        },
-    };
 
     return (
-        <div className='max-w-[1000px]'>{tableData && <Line options={options} data={tableData} />}</div>
+        <>{tableData &&
+            <div>
+                <div className='min-h-[700px]'>
+                    <Line options={options} data={tableData} />
+                </div>
+                <div className='m-3'>
+                    <p className="font-bold">Description</p>
+                    <p>{detailsV1[0].desc}</p>
+                    <h1> <p className="font-bold">{"(Optional data)"}</p> {showMore ? detailsV2[0].desc : `${detailsV2[0].desc.substring(0, 100)}`}</h1>
+
+                    <div className={showMore ? 'flex' : 'hidden'}>
+                        <ul className='mt-3 list-disc'>
+                            <label className='font-semibold'>Sources</label>
+
+                            {detailsV1.map((data, index) => {
+                                return (
+                                    <li className='ml-5' key={index}>
+                                        <a href={data.SourceLinkUrl}>{data.SourceLink}</a>
+                                    </li>
+                                )
+                            })}
+                            {detailsV2.map((data, index) => {
+                                return (
+                                    <li className='ml-5' key={index}>
+                                        <a href={data.SourceLinkUrl}>{data.SourceLink}</a>
+                                    </li>
+                                )
+                            })}
+
+
+                        </ul>
+                    </div>
+
+                    <h1 onClick={() => setShowMore(!showMore)} className='cursor-pointer text-blue-500 mt-3'>{showMore ? "Show Less" : " Show More"}</h1>
+                </div>
+            </div>} </>
     )
 }
 

@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 import { useContext } from 'react';
-const Register = () => {
+const Register = ({ onSubmitForTest }) => {
     const { user, setUser } = useContext(UserContext)
 
     const [username, setUsername] = useState("");
@@ -16,6 +16,12 @@ const Register = () => {
     const signup = (e) => {
 
         e.preventDefault();
+
+        if (onSubmitForTest) {
+            onSubmitForTest({
+                status: "true"
+            })
+        }
 
         const params = new URLSearchParams()
         params.append('username', username)
@@ -44,13 +50,12 @@ const Register = () => {
                     localStorage.setItem("user", JSON.stringify(user))
                     navigate("/")
                 }
-                console.log(result)
             }).catch(err => console.log(err))
 
     }
 
     return (
-        <div className='flex min-h-screen bg-bg-main bg-cover items-center w-full h-full lg:pl-[300px]'>
+        <div className='flex min-h-screen bg-bg-bear bg-cover items-center w-full h-full lg:pl-[300px]'>
             <div className='flex-1 lg:flex-none flex justify-center items-center h-screen'>
                 <div className='flex flex-col justify-center items-center px-24 bg-white bg-opacity-70 w-screen lg:w-auto h-full lg:h-3/4 lg:rounded-3xl shadow-xl'>
                     <h1 className='text-4xl text-blue-600 '>Welcome!</h1>
