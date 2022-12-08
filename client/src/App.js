@@ -8,6 +8,8 @@ import Register from './components/Register';
 import { UserContext } from './context/UserContext';
 import CreateNewVisualization from './components/CreateNewVisualization';
 import SharedVisualization from './components/SharedVisualization';
+import N1 from './components/N1'
+import N2 from './components/N2'
 
 function App() {
 
@@ -19,11 +21,16 @@ function App() {
     <Route path="/" element={<Login />} />
     <Route path="/register" element={<Register />} />
     <Route path="/CreateNewVisualization" element={<CreateNewVisualization />} />
+    <Route path='/N1' element={<N1 />} />
+    <Route path='/N2' element={<N2 />} />
   </>
 
   if (user?.token) {
-    authRoutes = <> <Route path="/" element={<Dashboard />} /> <Route path="/createNewVisualization" element={<CreateNewVisualization />} /></>
-
+    authRoutes = <> <Route path="/" element={<Dashboard />} /> 
+    <Route path="/createNewVisualization" element={<CreateNewVisualization />} />
+    <Route path="/N1" element={<N1 />} />
+    <Route path="/N2" element={<N2 />} /> 
+     </>
   }
 
   return (
