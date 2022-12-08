@@ -44,7 +44,7 @@ router.post('/signup', function (request, response) {
         console.log("here")
         login.adduser(request.body.fullname, request.body.password, request.body.username, request.body.age, function (dbError, dbresult) {
             if (dbError) {
-                response.send('error')
+                response.send(err)
             }
             else {
                 login.getUserID(request.body.username, function (dberr, dbresult) {
