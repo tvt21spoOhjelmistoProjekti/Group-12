@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const login = require('../models/login_model');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+const { response } = require('../app');
 
 router.post('/', function (request, response) {
     if (request.body.username && request.body.password) {
@@ -11,7 +12,7 @@ router.post('/', function (request, response) {
         const password = request.body.password;
         login.checkPassword(username, function (dbError, dbresult) {
             if (dbError) {
-                response.send(dbError)
+                response.status(404).send("database error")
             }
             else {
                 if (dbresult.length > 0) {
@@ -27,12 +28,16 @@ router.post('/', function (request, response) {
                             response.send(returnobj)
                         }
                         else {
-                            response.send("wrong password")
+                            response.status(403).send("wrong password")
                         }
                     })
+                } else {
+                    response.status(403).send("Username does not exist")
                 }
             }
         })
+    } else {
+        response.send(400)
     }
 }
 );
@@ -42,7 +47,7 @@ router.post('/signup', function (request, response) {
         console.log("here")
         login.adduser(request.body.fullname, request.body.password, request.body.username, request.body.age, function (dbError, dbresult) {
             if (dbError) {
-                response.send('error')
+                response.status(403).send("Username already exist")
             }
             else {
                 login.getUserID(request.body.username, function (dberr, dbresult) {
@@ -61,6 +66,8 @@ router.post('/signup', function (request, response) {
                 })
             }
         })
+    } else {
+        response.send(400)
     }
 })
 

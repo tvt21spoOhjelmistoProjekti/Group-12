@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 import { useContext } from 'react';
-const Register = () => {
+const Register = ({ onSubmitForTest }) => {
     const { user, setUser } = useContext(UserContext)
 
     const [username, setUsername] = useState("");
@@ -16,6 +16,12 @@ const Register = () => {
     const signup = (e) => {
 
         e.preventDefault();
+
+        if (onSubmitForTest) {
+            onSubmitForTest({
+                status: "true"
+            })
+        }
 
         const params = new URLSearchParams()
         params.append('username', username)
@@ -44,7 +50,6 @@ const Register = () => {
                     localStorage.setItem("user", JSON.stringify(user))
                     navigate("/")
                 }
-                console.log(result)
             }).catch(err => console.log(err))
 
     }

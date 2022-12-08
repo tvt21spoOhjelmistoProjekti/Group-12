@@ -10,7 +10,7 @@ const V7 = ({ V10_Data, V7_Data }) => {
 
     const [tableData, setTableData] = useState(null)
     const { user, setUser } = useContext(UserContext)
-    const [description, setDescription] = useState("")
+    const [description, setDescription] = useState("")                          //Declaring variables
     const [data_link, setData_link] = useState("")
     const [desc_link, setDesc_link] = useState("")
 
@@ -26,10 +26,10 @@ const V7 = ({ V10_Data, V7_Data }) => {
             if (!V10_Data && !V7_Data) {
                 var config = {
                     headers: {
-                        'Authorization': `Basic ${user.token}`
+                        'Authorization': `Basic ${user.token}`                      //Checking that user it authorized
                     }
                 }
-                response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V7", config);
+                response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V7", config);             //Getting chartdata from db
                 responseV10 = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V10", config);
             } else {
                 response.data = V7_Data
@@ -37,14 +37,14 @@ const V7 = ({ V10_Data, V7_Data }) => {
             }
 
             setDescription(response.data[0].description)
-            setData_link(response.data[0].data_link)
+            setData_link(response.data[0].data_link)                                                //Setting description and extra links from db to variables
             setDesc_link(response.data[0].desc_link)
 
             setTableData({
                 datasets: [
                     {
                         label: "CO2 (ppm)",
-                        data: response.data.map(d => ({ xAxis: d.time, value: d.co2 })),
+                        data: response.data.map(d => ({ xAxis: d.time, value: d.co2 })),             //Mapping through database to setup dataset for chart
                         borderColor: "blue",
                         backgroundColor: "blue",
                         yAxisID: 'y',
@@ -60,7 +60,7 @@ const V7 = ({ V10_Data, V7_Data }) => {
 
                     {
                         label: "Change in Global Average Surface Temperature",
-                        data: response.data.map(d => ({ xAxis: d.time, value: d.temp_change })),
+                        data: response.data.map(d => ({ xAxis: d.time, value: d.temp_change })),         //Mapping through database to setup dataset for chart
                         borderColor: "red",
                         backgroundColor: "red",
                         yAxisID: 'y1',
@@ -111,7 +111,7 @@ const V7 = ({ V10_Data, V7_Data }) => {
         },
         stacked: false,
         plugins: {
-            legend: {
+            legend: {                                                                                                                   //Chart options for the layout and ui
                 position: "top",
             },
             title: {
@@ -176,9 +176,9 @@ const V7 = ({ V10_Data, V7_Data }) => {
         },
     };
 
-    return (
+    return (                                                                                                                                    //Html code to export
         <div className='max-w-[1000px]'>{tableData && <Line options={options} data={tableData} />}
-            <div className='pt-2 px-3 text-justify'>
+            <div className='pt-2 px-3 text-justify'>                                            
                 <p>{description}</p>
                 <div className='pt-5 font-bold font-sans hover:font-extrabold text-blue-500'>
                     <a href={desc_link} target="_blank">Study description</a>

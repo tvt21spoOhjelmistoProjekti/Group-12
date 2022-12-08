@@ -1,22 +1,30 @@
-import axios from 'axios';
 import React from 'react'
 import { useContext } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react'; //
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext'; //
+import axios from 'axios';
 
 
-const Login = () => {
+const Login = ({ onSubmitForTest }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const { user, setUser } = useContext(UserContext) //
 
     const navigate = useNavigate();
     const logIn = (e) => {
         e.preventDefault();
-        console.log(user)
+
+
+
+        if (onSubmitForTest) {
+            onSubmitForTest({
+                status: "true"
+            })
+        }
 
 
         const params = new URLSearchParams()
@@ -36,14 +44,17 @@ const Login = () => {
                     const user = {
                         status: "logged_in",
                         token: result.data.token,
-                        username: result.data.fullname,
+                        username: result.data.username,
                         userId: result.data.idUsers,
-                        fullname: result.data.username
+                        fullname: result.data.fullname
                     }
 
                     setUser(user)
                     localStorage.setItem("user", JSON.stringify(user))
                     navigate("/")
+                } else {
+
+                    setErrorMessage(result.data)
                 }
             })
 
@@ -59,6 +70,7 @@ const Login = () => {
                         <input placeholder='Username'
                             className='bg-gray-200 rounded-full pl-5 outline-blue-900 transition-all delay-150 border-2 border-blue-700 h-9 w-56'
                             type="name"
+                            required={true}
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                         />
@@ -66,10 +78,11 @@ const Login = () => {
                         <input placeholder='Password'
                             className='bg-gray-200 rounded-full pl-5 outline-blue-900 transition-all delay-150 border-2 border-blue-700 h-9 w-56'
                             type="password"
+                            required={true}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
-
+                        {errorMessage && <p>{errorMessage}</p>}
                         <button className='bg-blue-600 text-white w-56 h-9 rounded-full' type='submit'>Log In</button>
                     </form>
                     <div className='mt-4'>

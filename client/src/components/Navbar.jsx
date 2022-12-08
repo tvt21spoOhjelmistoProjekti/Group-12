@@ -14,6 +14,8 @@ import CreateNewVisualization from './CreateNewVisualization';
 import { Link } from "react-router-dom";
 import N1 from './N1'
 import N2 from './N2'
+import axios from 'axios';
+
 
 
 const Navbar = () => {
@@ -33,11 +35,38 @@ const Navbar = () => {
     };
 
 
-    const temporaryLogoutButton = () => {
+    const LogoutButton = () => {                                               //Code for logout button
         localStorage.removeItem("user")
         setUser(null)
         navigate("/")
     }
+
+    const deleteUser = (e) => {
+
+        const params = new URLSearchParams()
+        params.append('userID', user.userId)                                                       //Code for delete user
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': `Basic ${user.token}`
+                
+            }
+        }
+
+        axios.post(process.env.REACT_APP_REQUEST_URL + "deleteuser", params, config)
+            .then((result) => {
+                console.log(result.data)
+                if (result.data) {
+                    localStorage.removeItem("user")
+                    setUser(null)
+                    navigate("/")
+                }
+            })
+
+    }
+
+
 
     return (
 
@@ -58,8 +87,8 @@ const Navbar = () => {
                         </MenuHandler>
                         <MenuList>
                             <span className='pl-3'>{user.username}</span>
-                            <MenuItem onClick={temporaryLogoutButton}><p className='text-black'>Log out</p></MenuItem>
-                            <MenuItem ><p className='text-red-500'>Delete account</p></MenuItem>
+                            <MenuItem onClick={LogoutButton}><p className='text-black'>Log out</p></MenuItem>
+                            <MenuItem onClick={deleteUser}><p className='text-red-500'>Delete account</p></MenuItem>
                         </MenuList>
                     </Menu>
                 </div>
@@ -75,8 +104,8 @@ const Navbar = () => {
                             <MenuItem onClick={navigateToN1}><p className='text-black mt-2'>Temperature data and CO2 concentrations</p></MenuItem>
                             <MenuItem onClick={navigateToN2}><p className='text-black mt-2'>Emission sources</p></MenuItem>
                             <MenuItem onClick={navigateToNewVisuals}><p className='text-black'>Create new visualization</p></MenuItem>
-                            <MenuItem onClick={temporaryLogoutButton}><p className='text-black'>Log out</p></MenuItem>
-                            <MenuItem ><p className='text-red-700'>Delete account</p></MenuItem>
+                            <MenuItem onClick={LogoutButton}><p className='text-black'>Log out</p></MenuItem>
+                            <MenuItem onClick={deleteUser}><p className='text-red-700'>Delete account</p></MenuItem>
                         </MenuList>
                     </Menu>
                 </div>
