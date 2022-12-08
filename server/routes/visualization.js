@@ -28,10 +28,16 @@ router.post('/create', (req, res) => {
                 res.send(randomUrl)
             }
             else {
-                res.send(dbError)
+                if (dbError.errno === 1452) {
+                    res.status(403).send("username does not exist")
+                }
+                res.status(403).send("Something went worng")
             }
         })
 
+    }
+    else {
+        response.send(400)
     }
 })
 

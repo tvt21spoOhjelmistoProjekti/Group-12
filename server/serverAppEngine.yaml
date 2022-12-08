@@ -1,0 +1,8 @@
+runtime: nodejs16
+service: server
+env_variables:
+  MYSQL_HOST: sql11.freemysqlhosting.net
+  MYSQL_USER: sql11537887
+  MYSQL_PASSWORD: QIhYNS6m55
+  MYSQL_DATABASE: sql11537887
+  MY_TOKEN: Bu8o5UrqDEMwilwo0DZOZ25j7LsaAuO5RY5j8M45/x3mSzkg1Q/Nj0urC7ZHlLYoiu7iCah7n7Fj1THaIm0JpQ==
