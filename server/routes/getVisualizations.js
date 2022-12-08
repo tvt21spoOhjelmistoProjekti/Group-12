@@ -12,7 +12,7 @@ router.get('/:url', async (req, res) => {
                 res.send("err")
             } else {
                 if (dbresult.length <= 0) {
-                    res.send("wrong url")
+                    res.status(403).send("wrong url")
                     return
                 }
                 const visalizations = dbresult[0].visualizations;
