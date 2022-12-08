@@ -98,19 +98,27 @@ const V6 = ({ V6Data }) => {
         },
     };
 
-    return (
-        <div className='max-w-[1000px]'>{tableData && <Line options={options} data={tableData} />}
-            <div className='pt-2 px-3 text-justify'>
-                <p>Revised EPICA Dome C and Antarctic composite ice core atmospheric CO2 data. This new version of CO2 composite
-                    replaces the old version of Luthi et al. (2008), which contains the analytical bias described in Bereiter et al. 2015
-                    and lower quality data in other sections.</p>
-                <div className='pt-5 font-bold font-sans hover:font-serif text-orange-400'>
-                    <a href='https://www.ncei.noaa.gov/access/paleo-search/study/17975'>Study description</a>
-                </div>
-                <div className='pt-5 font-bold font-sans hover:font-serif text-orange-400'>
-                    <a href='https://www.ncei.noaa.gov/pub/data/paleo/icecore/antarctica/antarctica2015co2composite.txt'>Data source</a>
+    if (tableData) {
+
+        return (
+            <div className='max-w-[1000px]'><Line options={options} data={tableData} />
+                <div className='pt-2 px-3 text-justify'>
+                    <p>Revised EPICA Dome C and Antarctic composite ice core atmospheric CO2 data. This new version of CO2 composite
+                        replaces the old version of Luthi et al. (2008), which contains the analytical bias described in Bereiter et al. 2015
+                        and lower quality data in other sections.</p>
+                    <div className='pt-5 font-bold font-sans text-orange-400'>
+                        <a href='https://www.ncei.noaa.gov/access/paleo-search/study/17975'>Study description</a>
+                    </div>
+                    <div className='pt-5 font-bold font-sans text-orange-400'>
+                        <a href='https://www.ncei.noaa.gov/pub/data/paleo/icecore/antarctica/antarctica2015co2composite.txt'>Data source</a>
+                    </div>
                 </div>
             </div>
+        )
+    }
+    return (
+        <div className='flex justify-center items-center'>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" />
         </div>
     )
 }

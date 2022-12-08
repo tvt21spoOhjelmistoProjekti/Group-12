@@ -31,7 +31,7 @@ const V3_V4 = ({ V3_V4_data, V10_Data }) => {
                         'Authorization': `Basic ${user.token}`
                     }
                 }
- 
+
                 response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V3_V4", config)
                 response2 = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V10", config)
             } else {
@@ -197,41 +197,46 @@ const V3_V4 = ({ V3_V4_data, V10_Data }) => {
         },
     };
 
-    return (
-        <div>
-            {tableData && <div className='min-h-[500px]'><Line options={options} data={tableData} /></div>}
-            <div className='pt-2 px-3 text-justify'>
-                <h1 className=' font-semibold'>Description</h1>
-                 <p>{description}</p>  
-                 <div>
-                    <h1 className=' pt-5 font-semibold'>Description for optional data</h1>
-                    <p>{description_optional}</p>
-                 </div>
-                 
-                 <p className='font-semibold'>Sources</p>
-                 <div>
-                 <a className=' font-sans hover:font-extrabold text-blue-500' href={dataLink_Annual}>Data Annual</a>
-                 </div>
-                 <div>
-                 <a className='font-sans hover:font-extrabold text-blue-500' href={dataLink_Monthly}>Data Monthly</a>
-                 </div>
-                 <div>
-                 <a className='font-sans hover:font-extrabold text-blue-500' href={sourceLinkUrl}>Measurements</a>
-                 </div>
-                 <div>
-                 <a className=' font-sans hover:font-extrabold text-blue-500' href={dataLink_optional}>Optional data</a>
-                 </div>
-                 <div>
-                 <a className='  font-sans hover:font-extrabold text-blue-500' href={sourceLinkUrl_optional}>Optional description</a>
-                 </div>
-                 
+    if (tableData) {
+        return (
+            <div>
+                <div className='min-h-[500px]'><Line options={options} data={tableData} /></div>
+                <div className='pt-2 px-3 text-justify'>
+                    <h1 className=' font-semibold'>Description</h1>
+                    <p>{description}</p>
+                    <div>
+                        <h1 className=' pt-5 font-semibold'>Description for optional data</h1>
+                        <p>{description_optional}</p>
+                    </div>
 
-                 
-                
+                    <p className='font-semibold'>Sources</p>
+                    <div>
+                        <a className=' font-sans text-blue-500' href={dataLink_Annual}>Data Annual</a>
+                    </div>
+                    <div>
+                        <a className='font-sans text-blue-500' href={dataLink_Monthly}>Data Monthly</a>
+                    </div>
+                    <div>
+                        <a className='font-sans text-blue-500' href={sourceLinkUrl}>Measurements</a>
+                    </div>
+                    <div>
+                        <a className=' font-sans text-blue-500' href={dataLink_optional}>Optional data</a>
+                    </div>
+                    <div>
+                        <a className='  font-sans text-blue-500' href={sourceLinkUrl_optional}>Optional description</a>
+                    </div>
+
                 </div>
 
             </div>
 
+        )
+    }
+
+    return (
+        <div className='flex justify-center items-center'>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" />
+        </div>
     )
 }
 

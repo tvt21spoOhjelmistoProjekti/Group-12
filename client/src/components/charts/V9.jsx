@@ -265,39 +265,46 @@ const V9 = ({ V9Data }) => {
     }
 
 
+    if (tableData) {
 
+        return (
+            <> <div>
+
+                <div className='flex justify-center mt-2'>
+                    <h1 className='font-bold text-2xl'>Global CO2 emissions by sectors {"(%)"}</h1>
+                </div>
+                <div className='flex flex-col lg:flex-row lg:w-1/2 ml-4 mb-4'>
+                    <Doughnut data={tableData} plugins={[ChartDataLabels]}
+                        options={options}
+                    />
+
+
+                    {detailedTableData &&
+                        <div className='flex flex-col min-w-full justify-center mt-3 lg:mt-0'>
+                            <p className='font-bold'>Detailed data from {detailedTableData[0].sector}</p>
+                            {detailedTableData.map((d, i) => {
+                                return (
+                                    <p key={i}>{d.label}: {d.value} %</p>
+                                )
+                            })}</div>
+                    }
+                </div>
+
+
+
+                <div className='p-3'>
+                    <h1 className='font-bold'>Description</h1>
+                    <p>{description[0].desc}</p>
+                    <a href={description[0].sourcelinkURL}><p className='font-bold pt-4 text-blue-500'>{description[0].sourceLink}</p></a>
+                </div>
+            </div>
+            </>
+        )
+    }
     return (
-        <>  {tableData && <div>
-
-            <div className='flex justify-center mt-2'>
-                <h1 className='font-bold text-2xl'>Global CO2 emissions by sectors {"(%)"}</h1>
-            </div>
-            <div className='flex flex-col lg:flex-row lg:w-1/2 ml-4 mb-4'>
-                <Doughnut data={tableData} plugins={[ChartDataLabels]}
-                    options={options}
-                />
-
-
-                {detailedTableData &&
-                    <div className='flex flex-col min-w-full justify-center mt-3 lg:mt-0'>
-                        <p className='font-bold'>Detailed data from {detailedTableData[0].sector}</p>
-                        {detailedTableData.map((d, i) => {
-                            return (
-                                <p key={i}>{d.label}: {d.value} %</p>
-                            )
-                        })}</div>
-                }
-            </div>
-
-
-
-            <div className='p-3'>
-                <h1 className='font-bold'>Description</h1>
-                <p>{description[0].desc}</p>
-                <a href={description[0].sourcelinkURL}><p className='font-bold pt-4 text-blue-500'>{description[0].sourceLink}</p></a>
-            </div>
-        </div>}
-        </>
+        <div className='flex justify-center items-center'>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" />
+        </div>
     )
 }
 
