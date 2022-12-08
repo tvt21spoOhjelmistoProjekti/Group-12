@@ -72,7 +72,7 @@ const Navbar = () => {
 
         <div className='flex flex-col '>
             <div className='flex h-20 shadow-lg items-center justify-between'>
-                <h1 className='text-2xl lg:text-5xl'><Link to="/"><img className=' w-36 h-20 left-0'  src={process.env.PUBLIC_URL + "/globe.png"} /> </Link></h1>
+                <h1 className='text-2xl lg:text-5xl ml-8'><Link to="/">Dashboard</Link></h1>
                 
                 
 
