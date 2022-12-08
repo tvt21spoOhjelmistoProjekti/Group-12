@@ -12,6 +12,8 @@ import { UserContext } from '../context/UserContext';
 import { FaBars } from 'react-icons/fa'
 import CreateNewVisualization from './CreateNewVisualization';
 import { Link } from "react-router-dom";
+import N1 from './N1'
+import N2 from './N2'
 
 
 const Navbar = () => {
@@ -20,7 +22,14 @@ const Navbar = () => {
 
     const navigateToNewVisuals = () =>{
         navigate("/CreateNewVisualization");
-        
+    };
+
+    const navigateToN1 = () => {
+        navigate("/N1");
+    };
+    
+    const navigateToN2 = () => {
+        navigate("/N2");
     };
 
 
@@ -30,13 +39,17 @@ const Navbar = () => {
         navigate("/")
     }
 
-
     return (
 
         <div className='flex flex-col '>
             <div className='flex h-20 shadow-lg items-center justify-between'>
-                <h1 className='text-2xl lg:text-5xl ml-8'><Link to="/">Placeholder</Link></h1>
+                <h1 className='text-2xl lg:text-5xl'><Link to="/"><img className=' w-36 h-20 left-0'  src={process.env.PUBLIC_URL + "/globe.png"} /> </Link></h1>
+                
+                
+
                 <div className='hidden space-x-8 mr-8 lg:flex'>
+                    <Button  variant="gradient" > <Link to="N1">Temperature data and CO2 concentrations</Link></Button>
+                    <Button  variant="gradient" > <Link to="N2">Emission sources</Link></Button>
                     <Button variant="gradient" onClick={() => { }}>My Visualizations</Button>
                     <Button  variant="gradient" > <Link to="createNewVisualization">Create new visualization</Link></Button>
                     <Menu>
@@ -59,6 +72,8 @@ const Navbar = () => {
                         <MenuList>
                             <span className='pl-3'>{user.username}</span>
                             <MenuItem><p className='text-black mt-2'>My Visualizations</p></MenuItem>
+                            <MenuItem onClick={navigateToN1}><p className='text-black mt-2'>Temperature data and CO2 concentrations</p></MenuItem>
+                            <MenuItem onClick={navigateToN2}><p className='text-black mt-2'>Emission sources</p></MenuItem>
                             <MenuItem onClick={navigateToNewVisuals}><p className='text-black'>Create new visualization</p></MenuItem>
                             <MenuItem onClick={temporaryLogoutButton}><p className='text-black'>Log out</p></MenuItem>
                             <MenuItem ><p className='text-red-700'>Delete account</p></MenuItem>
