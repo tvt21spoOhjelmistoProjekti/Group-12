@@ -2,6 +2,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const dotenv = require('dotenv');
+dotenv.config();
+const port = process.env.PORT || 3000;
 
 const jwt = require('jsonwebtoken');
 
@@ -28,10 +31,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/getvisualization', getVisualizations);
-app.use('/visualization', visualization);
 app.use(authenticateToken);
+app.use('/visualization', visualization);
 app.use('/chart', chartData);
 app.use('/deleteuser', deleteuserRouter);
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
 
 
 
