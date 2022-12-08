@@ -28,7 +28,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/getvisualization', getVisualizations);
-
 app.use('/visualization', visualization);
 app.use(authenticateToken);
 app.use('/chart', chartData);
@@ -55,3 +54,4 @@ function authenticateToken(req, res, next) {
 
 
 module.exports = app;
+
