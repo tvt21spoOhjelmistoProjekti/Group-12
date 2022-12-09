@@ -1,5 +1,5 @@
-node_modules
-scr
-public
+/node_modules/
+/scr/
+/public/
 .git
 .gitignore

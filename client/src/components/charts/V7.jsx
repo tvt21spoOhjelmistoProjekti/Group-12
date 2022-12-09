@@ -176,21 +176,33 @@ const V7 = ({ V10_Data, V7_Data }) => {
         },
     };
 
-    return (                                                                                                                                    //Html code to export
-        <div className='max-w-[1000px]'>{tableData && <Line options={options} data={tableData} />}
-            <div className='pt-2 px-3 text-justify'>                                            
-                <p>{description}</p>
-                <div className='pt-5 font-bold font-sans hover:font-extrabold text-blue-500'>
-                    <a href={desc_link} target="_blank">Study description</a>
-                </div>
-                <div className='pt-5 font-bold font-sans hover:font-extrabold text-blue-500'>
-                    <a href={data_link} target="_blank">Dataset</a>
-                </div>
 
+    if (tableData) {
+
+        return (                                                                                                                                    //Html code to export
+            <div className='max-w-[1000px]'><Line options={options} data={tableData} />
+                <div className='pt-2 px-3 text-justify'>
+                    <p>{description}</p>
+                    <div className='pt-5 font-bold font-sans text-blue-500'>
+                        <a href={desc_link} target="_blank">Study description</a>
+                    </div>
+                    <div className='pt-5 font-bold font-sans text-blue-500'>
+                        <a href={data_link} target="_blank">Dataset</a>
+                    </div>
+
+                </div>
             </div>
-        </div>
 
+        )
+    }
+
+
+    return (
+        <div className='flex justify-center items-center'>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" />
+        </div>
     )
+
 }
 
 export default V7

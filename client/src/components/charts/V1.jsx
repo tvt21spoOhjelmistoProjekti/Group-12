@@ -201,44 +201,52 @@ const V1 = ({ v1Data, v2Data }) => {
     }, [])
 
 
+    if (tableData) {
+
+        return (
+            <>{tableData &&
+                <div>
+                    <div className='min-h-[700px]'>
+                        <Line options={options} data={tableData} />
+                    </div>
+                    <div className='m-3'>
+                        <p className="font-bold">Description</p>
+                        <p>{detailsV1[0].desc}</p>
+                        <h1> <p className="font-bold">{"(Optional data)"}</p> {showMore ? detailsV2[0].desc : `${detailsV2[0].desc.substring(0, 100)}`}</h1>
+
+                        <div className={showMore ? 'flex' : 'hidden'}>
+                            <ul className='mt-3 list-disc'>
+                                <label className='font-semibold'>Sources</label>
+
+                                {detailsV1.map((data, index) => {
+                                    return (
+                                        <li className='ml-5' key={index}>
+                                            <a href={data.SourceLinkUrl}>{data.SourceLink}</a>
+                                        </li>
+                                    )
+                                })}
+                                {detailsV2.map((data, index) => {
+                                    return (
+                                        <li className='ml-5' key={index}>
+                                            <a href={data.SourceLinkUrl}>{data.SourceLink}</a>
+                                        </li>
+                                    )
+                                })}
+
+
+                            </ul>
+                        </div>
+
+                        <h1 onClick={() => setShowMore(!showMore)} className='cursor-pointer text-blue-500 mt-3'>{showMore ? "Show Less" : " Show More"}</h1>
+                    </div>
+                </div>} </>
+        )
+    }
 
     return (
-        <>{tableData &&
-            <div>
-                <div className='min-h-[700px]'>
-                    <Line options={options} data={tableData} />
-                </div>
-                <div className='m-3'>
-                    <p className="font-bold">Description</p>
-                    <p>{detailsV1[0].desc}</p>
-                    <h1> <p className="font-bold">{"(Optional data)"}</p> {showMore ? detailsV2[0].desc : `${detailsV2[0].desc.substring(0, 100)}`}</h1>
-
-                    <div className={showMore ? 'flex' : 'hidden'}>
-                        <ul className='mt-3 list-disc'>
-                            <label className='font-semibold'>Sources</label>
-
-                            {detailsV1.map((data, index) => {
-                                return (
-                                    <li className='ml-5' key={index}>
-                                        <a href={data.SourceLinkUrl}>{data.SourceLink}</a>
-                                    </li>
-                                )
-                            })}
-                            {detailsV2.map((data, index) => {
-                                return (
-                                    <li className='ml-5' key={index}>
-                                        <a href={data.SourceLinkUrl}>{data.SourceLink}</a>
-                                    </li>
-                                )
-                            })}
-
-
-                        </ul>
-                    </div>
-
-                    <h1 onClick={() => setShowMore(!showMore)} className='cursor-pointer text-blue-500 mt-3'>{showMore ? "Show Less" : " Show More"}</h1>
-                </div>
-            </div>} </>
+        <div className='flex justify-center items-center'>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" />
+        </div>
     )
 }
 

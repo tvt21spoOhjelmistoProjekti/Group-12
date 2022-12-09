@@ -129,21 +129,28 @@ const V8 = ({ V8_Data }) => {
         },
     };
 
-    return (
-                                                                                                                                                                //Html code to export
-        <div className='h-auto'>{tableData && <div className='h-[1500px]'><Line options={options} data={tableData} /></div>}
-            <div className='pt-2 pl-3 text-justify'>
-                <p>{description}</p>
-                <div className='pt-5 font-bold font-sans hover:font-extrabold text-blue-500'>
-                    <a href={desc_link} target="_blank">Study description</a>
-                </div>
-                <div className='pt-5 font-bold font-sans hover:font-extrabold text-blue-500'>
-                    <a href={data_link} target="_blank">Dataset</a>
-                </div>
+    if (tableData) {
+        return (
+            //Html code to export
+            <div className='h-auto'><div className='h-[1500px]'><Line options={options} data={tableData} /></div>
+                <div className='pt-2 pl-3 text-justify pr-4'>
+                    <p>{description}</p>
+                    <div className='pt-5 font-bold font-sans hover:font-extrabold text-blue-500'>
+                        <a href={desc_link} target="_blank">Study description</a>
+                    </div>
+                    <div className='pt-5 font-bold font-sans hover:font-extrabold text-blue-500 '>
+                        <a href={data_link} target="_blank">Dataset</a>
+                    </div>
 
+                </div>
             </div>
+
+        )
+    }
+    return (
+        <div className='flex justify-center items-center'>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" />
         </div>
-                                                                                                                                                                            
     )
 
 }
