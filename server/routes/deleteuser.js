@@ -3,9 +3,9 @@ const deleteuser = require('../models/login_model');
 const router = express.Router();
 const publicVisualizations = require('../models/visualization_model')
 
-router.post('/', function (request, response) {
-    if (request.body.userID) {
-        const userID = request.body.userID;
+router.delete('/:userID', function (request, response) {
+    if (request.params.userID) {
+        const userID = request.params.userID;
 
         publicVisualizations.deleteUsersVisualizations(userID, function (dberr, dbresult) {
             if (dberr) {
@@ -25,7 +25,7 @@ router.post('/', function (request, response) {
         })
     }
     else {
-        response.status(400).send("database error")
+        response.status(400).send("bad request")
     }
 })
 
