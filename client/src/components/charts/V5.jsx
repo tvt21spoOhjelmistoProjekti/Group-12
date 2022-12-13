@@ -81,9 +81,9 @@ const V5 = ({ V5_Data }) => {
 
 
     const options = {
+        maintainAspectRatio: false,
         responsive: true,
         interaction: {
-            mode: 'index',
             intersect: false,
         },
         stacked: false,
@@ -124,8 +124,10 @@ const V5 = ({ V5_Data }) => {
 
     if (tableData) {
         return (
-            <div className='max-w-[1000px]'>
-                <Line options={options} data={tableData} />
+            <div >
+                <div className='min-h-[600px] max-h-[600px]'>
+                    <Line options={options} data={tableData} />
+                </div>
                 <div className='pt-2 px-3 text-justify'>
                     <p>{description}</p>
                     <div className='pt-5 font-bold font-sans  text-blue-500'>

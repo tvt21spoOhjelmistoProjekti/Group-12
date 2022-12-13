@@ -8,13 +8,13 @@ import { UserContext } from "../../context/UserContext";
 
 const V6 = ({ V6Data }) => {
 
-    
+
     const [tableData, setTableData] = useState(null)
     const { user, setUser } = useContext(UserContext)
     const [description, setDescription] = useState("")
     const [studydesc, setStudydesc] = useState("")
     const [datasource, setDatasource] = useState("")
-    
+
 
     const getData = async () => {
 
@@ -54,7 +54,7 @@ const V6 = ({ V6Data }) => {
                         pointRadius: 0,
 
                     }
-                  
+
                 ],
             })
         } catch (error) {
@@ -67,17 +67,16 @@ const V6 = ({ V6Data }) => {
     }, [])
 
     const options = {
+        maintainAspectRatio: false,
         responsive: true,
         interaction: {
-            mode: 'index',
             intersect: false,
-            
         },
         stacked: false,
         plugins: {
             legend: {
                 position: "top"
-                
+
             },
             title: {
                 display: true,
@@ -102,7 +101,10 @@ const V6 = ({ V6Data }) => {
     if (tableData) {
 
         return (
-            <div className='max-w-[1000px]'>{tableData && <Line options={options} data={tableData} />}
+            <div >
+                <div className='min-h-[600px] max-h-[600px]'>
+                    <Line options={options} data={tableData} />
+                </div>
                 <div className='pt-2 px-3 text-justify'>
                     <p>{description}</p>
                     <div className='pt-5 font-bold font-sans text-blue-500'>
