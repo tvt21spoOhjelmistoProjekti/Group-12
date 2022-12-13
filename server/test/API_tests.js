@@ -16,7 +16,7 @@ describe('Create user API tests', function() {
             chai.request(serverAddress)
             .post('/login/signup')
             .send({
-                fullname: "Testaaja",
+                fullname: "Testaaja",                                                                           //Testing create user backend
                 username: 33,
                 password: "1234",
                 age: "fifteen"
@@ -88,7 +88,7 @@ describe('Login API tests', function() {
             .send({
                 username: "Tester56",
                 password: "1234"
-            })
+            })                                                                                                                                      //Testing login backend
             .end(function(err, res) {
                 expect(err).to.be.null;
                 expect(res).to.have.status(403);
@@ -153,7 +153,7 @@ describe('Delete user API tests', function() {
             })
         })
 
-        it('should reject for no user ID', function(done){
+        it('should reject for no user ID', function(done){                                                                  //Testing delete user backend
             chai.request(serverAddress)
             .delete('/deleteuser/')
             .set('Authorization', `Basic ${testAuth}`)

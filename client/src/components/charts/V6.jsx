@@ -12,7 +12,7 @@ const V6 = ({ V6Data }) => {
     const [tableData, setTableData] = useState(null)
     const { user, setUser } = useContext(UserContext)
     const [description, setDescription] = useState("")
-    const [studydesc, setStudydesc] = useState("")
+    const [studydesc, setStudydesc] = useState("")                                                              //Variables
     const [datasource, setDatasource] = useState("")
 
 
@@ -28,20 +28,20 @@ const V6 = ({ V6Data }) => {
                         'Authorization': `Basic ${user.token}`
                     }
                 }
-                response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V6", config)
+                response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V6", config)                          //Getting data
             } else {
                 response.data = V6Data
             }
 
             setDescription(response.data[0].description)
-            setStudydesc(response.data[0].studydesc)
+            setStudydesc(response.data[0].studydesc)                                                                //Setting description and links
             setDatasource(response.data[0].datasource)
 
 
             setTableData({
                 datasets: [
                     {
-                        label: "CO2 Concentration Data",
+                        label: "CO2 Concentration Data",                                                                            //Setting datasets
                         data: response.data.map(d => ({ xAxis: d.Calendar_years_BP, value: d.CO2_concentration })),
                         borderColor: "#2CCCE4",
                         backgroundColor: "#A4DD00",
@@ -70,7 +70,7 @@ const V6 = ({ V6Data }) => {
         maintainAspectRatio: false,
         responsive: true,
         interaction: {
-            intersect: false,
+            intersect: false,                                                   //Chart options
         },
         stacked: false,
         plugins: {
@@ -100,7 +100,7 @@ const V6 = ({ V6Data }) => {
 
     if (tableData) {
 
-        return (
+        return (                                                                                                //Return HTML code
             <div >
                 <div className='min-h-[600px] max-h-[600px]'>
                     <Line options={options} data={tableData} />
