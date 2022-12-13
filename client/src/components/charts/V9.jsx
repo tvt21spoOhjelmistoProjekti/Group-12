@@ -10,7 +10,7 @@ const V9 = ({ V9Data }) => {
 
     const { user, setUser } = useContext(UserContext)
 
-    const [tableData, setTableData] = useState(null)
+    const [tableData, setTableData] = useState(null)                                //Setting up variables
     const [detailedTableData, setDetailedTableData] = useState(null)
     const [description, setDescription] = useState([])
     const [responseData, setResponseData] = useState(null)
@@ -24,16 +24,16 @@ const V9 = ({ V9Data }) => {
             if (!V9Data) {
                 var config = {
                     headers: {
-                        'Authorization': `Basic ${user.token}`
+                        'Authorization': `Basic ${user.token}`                                              //Authorization
                     }
                 }
-                response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V9", config);
+                response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V9", config);                 //Getting chart data
             } else {
                 response.data = V9Data;
             }
             console.log(response)
             setResponseData(response)
-            setDescription(response.data.filter(d => d.description || d.sourceLink || d.sourcelinkURL).map(d => ({ desc: d.description, sourceLink: d.sourceLink, sourcelinkURL: d.sourcelinkURL })))
+            setDescription(response.data.filter(d => d.description || d.sourceLink || d.sourcelinkURL).map(d => ({ desc: d.description, sourceLink: d.sourceLink, sourcelinkURL: d.sourcelinkURL })))                               //Filtering data
             setTableData({
                 labels: response.data.filter(d => d.Sector3 != "").map(d => d.Sector3),
                 datasets: [
@@ -42,7 +42,7 @@ const V9 = ({ V9Data }) => {
                         data: response.data.filter(d => 9 <= d.id && d.id <= 15).map(d => ({ value: d.Share_of_global_greenhouse_gas_emissions2, name: d.Sub_sector2 })),
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',                                                                                  //Setting up datasets for pie chart
                             'rgba(255, 206, 86, 0.2)',
                             'rgba(75, 192, 192, 0.2)',
                             'rgba(153, 102, 255, 0.2)',
@@ -159,7 +159,7 @@ const V9 = ({ V9Data }) => {
 
 
         } catch (error) {
-            console.log(error)
+            console.log(error)                                                          //Catch in case of error
         }
     }
 
@@ -171,7 +171,7 @@ const V9 = ({ V9Data }) => {
     const options = {
         plugins: {
             tooltip: {
-                boxWidth: 10,
+                boxWidth: 10,                                                                               //Chart options
                 width: 100,
                 callbacks: {
                     label: function (item) {
@@ -201,7 +201,7 @@ const V9 = ({ V9Data }) => {
                 }
             }
         },
-        onClick: function (evt, element) {
+        onClick: function (evt, element) {                                                                                              //Setting up interaction options for the chart
             if (element) {
                 if (element[0].index == 0) {
                     setDetailedTableData(responseData.data.filter(d => 1 <= d.id && d.id <= 6).map(d => ({ id: d.id, label: d.Sub_sector2, value: d.Share_of_global_greenhouse_gas_emissions2, sector: "Energy" })))
@@ -267,7 +267,7 @@ const V9 = ({ V9Data }) => {
 
     if (tableData) {
 
-        return (
+        return (                                                                            //Return HTML for the chart
             <> <div>
 
                 <div className='flex justify-center mt-2'>
