@@ -8,6 +8,7 @@ import Register from './components/Register';
 import { UserContext } from './context/UserContext';
 import CreateNewVisualization from './components/CreateNewVisualization';
 import SharedVisualization from './components/SharedVisualization';
+import MyVisualizations from './components/MyVisualizations';
 import N1 from './components/N1'
 import N2 from './components/N2'
 
@@ -25,6 +26,7 @@ function App() {
   if (user?.token) {
     authRoutes = <> <Route path="/" element={<Dashboard />} />
       <Route path="/createNewVisualization" element={<CreateNewVisualization />} />
+      <Route path="/MyVisualizations" element={<MyVisualizations />} />
       <Route path="/createNewAccount" element={<Register />} />
       <Route path="/N1" element={<N1 />} />
       <Route path="/N2" element={<N2 />} />
@@ -36,6 +38,7 @@ function App() {
       <Routes>
         {authRoutes}
         <Route path="/visualization/:urlParam" element={<SharedVisualization />} />
+        <Route path="/visualizaton/myvisual/:id" element={<MyVisualizations />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </UserContext.Provider>

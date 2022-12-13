@@ -26,6 +26,9 @@ const Navbar = () => {
         navigate("/CreateNewVisualization");
     };
 
+    const navigateToMyVisualizations = () =>{
+        navigate("/MyVisualizations");
+
     const navigateToN1 = () => {
         navigate("/N1");
     };
@@ -33,6 +36,8 @@ const Navbar = () => {
     const navigateToN2 = () => {
         navigate("/N2");
     };
+
+    
 
 
     const LogoutButton = () => {                                               //Code for logout button
@@ -125,7 +130,7 @@ const Navbar = () => {
                                 </MenuHandler>
                                 <MenuList>
                                     <span className='pl-3'>{user.username}</span>
-                                    <MenuItem><p className='text-black mt-2'>My Visualizations</p></MenuItem>
+                                    <MenuItem onClick={navigateToMyVisualizations}> <p className='text-black mt-2'>My Visualizations</p></MenuItem>
                                     <MenuItem onClick={navigateToN1}><p className='text-black'>Temperature data and CO2 concentrations</p></MenuItem>
                                     <MenuItem onClick={navigateToN2}><p className='text-black '>Emission sources</p></MenuItem>
                                     <MenuItem onClick={navigateToNewVisuals}><p className='text-black'>Create new visualization</p></MenuItem>
@@ -144,5 +149,6 @@ const Navbar = () => {
             </div>
         </div>
     )
+ }
 }
 export default Navbar

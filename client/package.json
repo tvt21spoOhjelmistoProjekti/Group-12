@@ -7,7 +7,7 @@
     "@reduxjs/toolkit": "^1.9.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
-    "axios": "^1.2.0",
+    "axios": "^1.2.1",
     "chart.js": "^3.9.1",
     "chartjs-adapter-luxon": "^1.2.0",
     "chartjs-plugin-datalabels": "^2.1.0",
@@ -28,6 +28,7 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.4.3",
     "react-scripts": "^5.0.1",
+    "react-textfit": "^1.1.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

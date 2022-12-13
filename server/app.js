@@ -15,6 +15,7 @@ var chartData = require('./routes/chartData')
 var visualization = require('./routes/visualization')
 var getVisualizations = require('./routes/getVisualizations')
 
+
 var app = express();
 var cors = require('cors')
 app.use(cors())
@@ -31,10 +32,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/getvisualization', getVisualizations);
-app.use(authenticateToken);
 app.use('/visualization', visualization);
+app.use(authenticateToken);
 app.use('/chart', chartData);
 app.use('/deleteuser', deleteuserRouter);
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

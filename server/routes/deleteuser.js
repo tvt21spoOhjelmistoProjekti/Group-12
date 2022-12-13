@@ -9,7 +9,7 @@ router.post('/', function (request, response) {
 
         publicVisualizations.deleteUsersVisualizations(userID, function (dberr, dbresult) {
             if (dberr) {
-                response.status(404).send("database error in visualizations")
+                response.status(404).send("database error in users")
             }
             else {
                 deleteuser.deleteuser(userID, function (dberr, dbresult)  {
