@@ -122,7 +122,7 @@ const MyVisualizations = () => {
 
                                     </div>
                                     <div className="flex justify-between mt-3">
-                                        <LinkBtn />
+                                        <LinkBtn link={data.url} />
                                         <button onClick={(e) => deleteMyVisualizations(e, data.url)} className="text-white bg-red-600 rounded-full outline-red-900 border-2 border-red-700  w-44 h-7 text-center hover:bg-red-500">Delete visualization</button>
                                     </div>
                                 </div>

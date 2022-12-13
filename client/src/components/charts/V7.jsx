@@ -84,7 +84,7 @@ const V7 = ({ V10_Data, V7_Data }) => {
                             xAxisKey: "xAxis",
                             yAxisKey: "value",
                         },
-
+                        hidden: true,
                         borderWidth: 1,
                         pointRadius: 4,
                         showLine: false,
@@ -105,6 +105,7 @@ const V7 = ({ V10_Data, V7_Data }) => {
 
 
     const options = {
+        maintainAspectRatio: false,
         responsive: true,
         interaction: {
             intersect: false,
@@ -180,7 +181,10 @@ const V7 = ({ V10_Data, V7_Data }) => {
     if (tableData) {
 
         return (                                                                                                                                    //Html code to export
-            <div className='max-w-[1000px]'><Line options={options} data={tableData} />
+            <div >
+                <div className='min-h-[700px] max-h-[700px]'>
+                    <Line options={options} data={tableData} />
+                </div>
                 <div className='pt-2 px-3 text-justify'>
                     <p>{description}</p>
                     <div className='pt-5 font-bold font-sans text-blue-500'>
