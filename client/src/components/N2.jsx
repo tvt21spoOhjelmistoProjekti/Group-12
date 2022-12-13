@@ -10,7 +10,7 @@ import {
 } from "@material-tailwind/react";
 import { UserContext } from '../context/UserContext';
 import Navbar from './Navbar';
-import V8 from './charts/V8';
+import V8 from './charts/V8';                  //Imported charts to show on this page
 import V9 from './charts/V9';
 
 const N2 = () => {
