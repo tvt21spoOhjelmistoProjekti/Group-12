@@ -7,7 +7,7 @@ import { UserContext } from '../../context/UserContext';
 
 const optionalDesc = "Northern Hemisphere temperature reconstruction for the 1-1979 years by combining low-resolution proxies with tree-ring data, using a wavelet transform technique to achieve timescale-dependent processing of the data.";
 
-const V1 = ({ v1Data, v2Data }) => {
+const V1 = ({ v1Data, v2Data, test }) => {
 
     const [tableData, setTableData] = useState(null)
     const [options, setOptions] = useState(null)
@@ -198,13 +198,13 @@ const V1 = ({ v1Data, v2Data }) => {
     useEffect(() => {
         getData(v1Data, v2Data)
 
-    }, [])
+    }, [v1Data, v2Data])
 
 
     if (tableData) {
 
         return (
-            <>{tableData &&
+            <>
                 <div>
                     <div className='min-h-[700px]'>
                         <Line options={options} data={tableData} />
@@ -239,7 +239,7 @@ const V1 = ({ v1Data, v2Data }) => {
 
                         <h1 onClick={() => setShowMore(!showMore)} className='cursor-pointer text-blue-500 mt-3'>{showMore ? "Show Less" : " Show More"}</h1>
                     </div>
-                </div>} </>
+                </div> </>
         )
     }
 

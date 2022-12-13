@@ -35,7 +35,9 @@ const Navbar = ({ deleteMockFunction, exampleContext }) => {
 
     const deleteUser = (e) => {
 
-        deleteMockFunction("This is clicked")
+        if (deleteMockFunction) {
+            deleteMockFunction("This is clicked")
+        }
 
         const options = {
             title: 'Are you sure?',
@@ -92,7 +94,7 @@ const Navbar = ({ deleteMockFunction, exampleContext }) => {
                 <h1 className='text-2xl lg:text-5xl ml-8'><Link to="/">CDV</Link></h1>
 
 
-                {user?.token || exampleContext.token ?
+                {user?.token || exampleContext?.token ?
                     <>
                         <div className='hidden space-x-8 mr-8 lg:flex'>
                             <Button variant="gradient" onClick={() => navigate("/N1")} >Temperature data and CO2 concentrations</Button>
@@ -130,8 +132,8 @@ const Navbar = ({ deleteMockFunction, exampleContext }) => {
                     </>
                     :
                     <div className='flex gap-5 pr-5'>
-                        <Button variant="gradient" > <Link to="N1">Login</Link></Button>
-                        <Button variant="gradient" > <Link to="N2">Register</Link></Button>
+                        <Link to="/"><Button variant="gradient" >Login</Button></Link>
+                        <Link to="/register"><Button variant="gradient" >Register</Button></Link>
                     </div>
                 }
 

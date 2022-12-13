@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const login = require('../models/login_model');
 
+// refresh token
 router.get('/:username', function (request, response) {
     const username = request.params.username;
     login.getAll(username, function (dbError, dbresult) {
@@ -25,7 +26,7 @@ router.get('/:username', function (request, response) {
     })
 })
 
-
+// generate token
 function generateAccessToken(username) {
     dotenv.config();
     return jwt.sign(username, process.env.MY_TOKEN, { expiresIn: '30d' });

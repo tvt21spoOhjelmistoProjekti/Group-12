@@ -1,5 +1,6 @@
 const db = require('../database');
 
+// MYSQL QUERIES
 const publicVisualizations = {
     createVisualization: function (userID, url, visualizations, title, description, columns, callback) {
         return db.query('INSERT INTO visualizationsAndUrl (userID, url, visualizations, title, description, columns) VALUES (?,?,?,?,?,?)', [userID, url, visualizations, title, description, columns], callback);
