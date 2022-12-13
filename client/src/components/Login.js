@@ -57,8 +57,9 @@ const Login = ({ onSubmitForTest }) => {
                     setErrorMessage(result.data)
                 }
             }).catch((e) => {
-                console.log(e)
-                setErrorMessage(e.response.data)
+                if (e.response?.data) {
+                    setErrorMessage(e.response.data)
+                }
             })
 
     }

@@ -4,6 +4,7 @@ import { render, screen, cleanup, fireEvent, getByText, waitFor } from '@testing
 import userEvent from '@testing-library/user-event'
 import Login from '../Login'
 import { BrowserRouter } from "react-router-dom";
+import AxiosMock from 'axios'
 
 
 
@@ -27,12 +28,12 @@ test('Log in form success and can send axios request', async () => {
     const passwordInput = screen.getByPlaceholderText('Password')
 
     // inserting values to inputfields
-    fireEvent.change(usernameInput, { target: { value: 'user' } })
-    fireEvent.change(passwordInput, { target: { value: '1234' } })
+    await fireEvent.change(usernameInput, { target: { value: 'user' } })
+    await fireEvent.change(passwordInput, { target: { value: '1234' } })
 
     // Submitting a from
     await user.click(button)
-    expect(onSubmit.mock.calls).toHaveLength(1)
+    await waitFor(() => { expect(onSubmit.mock.calls).toHaveLength(1) })
 
 })
 
