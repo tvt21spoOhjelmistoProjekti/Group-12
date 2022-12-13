@@ -41,4 +41,38 @@ router.post('/create', (req, res) => {
     }
 })
 
+router.get('/myvisual/:id', (req, res) => {
+    if (req.params.id) {
+        const userID = req.params.id
+
+        console.log(userID)
+        publicVisualizations.getMyVisualizations(userID, (dbError, dbresult) => {
+            if (dbresult) {
+                res.send(dbresult)
+            }
+            else {
+                res.send(dbError)
+            }
+        })
+    }
+})
+
+router.delete('/:url', async (request, response) => {
+    if (request.params.url) {
+        console.log(request.params.url)
+        publicVisualizations.deleteMyVisualizations(request.params.url, async (dberr, dbresult) => {
+            if (dberr) {
+                response.send(dberr)
+            }
+            else {
+                response.send(true)
+            }
+        })
+    }
+    else {
+        console.log("dberror")
+    }
+
+})
+
 module.exports = router;

@@ -74,11 +74,11 @@ const CreateNewVisualization = () => {
     };
     console.log(
       "valitsit" +
-        visualstring.slice(0, -1) +
-        "   " +
-        columns +
-        description +
-        title
+      visualstring.slice(0, -1) +
+      "   " +
+      columns +
+      description +
+      title
     );
 
     axios
@@ -94,7 +94,7 @@ const CreateNewVisualization = () => {
 
         console.log(result);
       })
-      .catch((e) => {});
+      .catch((e) => { });
   };
 
   return (
@@ -230,7 +230,8 @@ const CreateNewVisualization = () => {
                 />
                 <label for="V6">
                   <img
-                    src={process.env.PUBLIC_URL + "/800yearcomposite.png"}
+                    className="h-[236px]"
+                    src={process.env.PUBLIC_URL + "/IceCore800k.png"}
                     alt="logo"
                   />
                 </label>

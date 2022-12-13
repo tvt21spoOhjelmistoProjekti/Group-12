@@ -7,8 +7,14 @@ const publicVisualizations = {
     getVisualizationsbyUrl: async function (url, callback) {
         return db.query('SELECT * FROM visualizationsAndUrl where url= ?', [url], callback);
     },
-    deleteUsersVisualizations: function(userID, callback) {
+    deleteUsersVisualizations: function (userID, callback) {
         return db.query('DELETE FROM visualizationsAndUrl WHERE userID = ?', [userID], callback);
+    },
+    getMyVisualizations: async function (userID, callback) {
+        return db.query('SELECT * FROM visualizationsAndUrl where userID = ?', [userID], callback);
+    },
+    deleteMyVisualizations: function (url, callback) {
+        return db.query('DELETE FROM visualizationsAndUrl WHERE url = ?', [url], callback);
     }
 };
 

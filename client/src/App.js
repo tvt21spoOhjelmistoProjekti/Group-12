@@ -10,6 +10,7 @@ import CreateNewVisualization from './components/CreateNewVisualization';
 import SharedVisualization from './components/SharedVisualization';
 import N1 from './components/N1'
 import N2 from './components/N2'
+import MyVisualizations from './components/MyVisualizations';
 
 function App() {
 
@@ -25,7 +26,7 @@ function App() {
   if (user?.token) {
     authRoutes = <> <Route path="/" element={<Dashboard />} />
       <Route path="/createNewVisualization" element={<CreateNewVisualization />} />
-      <Route path="/createNewAccount" element={<Register />} />
+      <Route path="/myvisuals" element={<MyVisualizations />} />
       <Route path="/N1" element={<N1 />} />
       <Route path="/N2" element={<N2 />} />
     </>
