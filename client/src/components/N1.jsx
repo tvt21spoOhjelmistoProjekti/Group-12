@@ -12,7 +12,7 @@ import { UserContext } from '../context/UserContext';
 import Navbar from './Navbar';
 import V1 from './charts/V1';
 import V5 from './charts/V5';
-import V7 from './charts/V7';
+import V7 from './charts/V7';              //imported other charts to show on this page
 import V6 from './charts/V6';
 import V3_V4 from './charts/V3';
 
@@ -31,9 +31,9 @@ return (
                         <div className='w-full bg-white rounded shadow-xl'>
                             <V3_V4 />
                         </div>
-                        <div className='w-full bg-white rounded shadow-xl'  >
-                            <V5 />
-                        </div>
+                        <div className='w-full bg-white rounded shadow-xl'  >  
+                            <V5 />                                                     
+                        </div>                                                       
                     </div>
                     
                     <div className='w-full lg:w-1/2 flex flex-col gap-10'>
