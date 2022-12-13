@@ -18,8 +18,12 @@ import axios from 'axios';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'
 
-const Navbar = () => {
+const Navbar = ({ deleteMockFunction, exampleContext }) => {
+
     const { user, setUser } = useContext(UserContext)
+
+
+    ////////////////////////////////////////
     const navigate = useNavigate();
 
     const navigateToNewVisuals = () => {
@@ -42,6 +46,8 @@ const Navbar = () => {
     }
 
     const deleteUser = (e) => {
+
+        deleteMockFunction("This is clicked")
 
         const options = {
             title: 'Are you sure?',
@@ -97,7 +103,8 @@ const Navbar = () => {
             <div className='flex h-20 shadow-lg items-center justify-between'>
                 <h1 className='text-2xl lg:text-5xl ml-8'><Link to="/">CDV</Link></h1>
 
-                {user?.token ?
+
+                {user?.token || exampleContext.token ?
                     <>
                         <div className='hidden space-x-8 mr-8 lg:flex'>
                             <Button variant="gradient" > <Link to="N1">Temperature data and CO2 concentrations</Link></Button>
@@ -106,12 +113,12 @@ const Navbar = () => {
                             <Button variant="gradient" > <Link to="createNewVisualization">Create new visualization</Link></Button>
                             <Menu>
                                 <MenuHandler>
-                                    <Button variant="gradient" className='flex justify-center items-center'>{user.fullname} <FaBars className='text-2xl ml-4' /></Button>
+                                    <Button data-testid="menu-btn" className='flex justify-center items-center'>{exampleContext ? exampleContext.fullname : user.fullname} <FaBars className='text-2xl ml-4' /></Button>
                                 </MenuHandler>
                                 <MenuList>
-                                    <span className='pl-3'>{user.username}</span>
+                                    <span className='pl-3'>{exampleContext ? exampleContext.username : user.username}</span>
                                     <MenuItem onClick={LogoutButton}><p className='text-black'>Log out</p></MenuItem>
-                                    <MenuItem onClick={deleteUser}><p className='text-red-500'>Delete account</p></MenuItem>
+                                    <MenuItem onClick={deleteUser} data-testid="logout-btn"><p className='text-red-500'>Delete account</p></MenuItem>
                                 </MenuList>
                             </Menu>
                         </div>
@@ -119,15 +126,15 @@ const Navbar = () => {
                         <div className='flex mr-5 lg:hidden'>
                             <Menu>
                                 <MenuHandler>
-                                    <button><FaBars className='text-2xl' /></button>
+                                    <button data-testid="menu-btn" ><FaBars className='text-2xl' /></button>
                                 </MenuHandler>
                                 <MenuList>
-                                    <span className='pl-3'>{user.username}</span>
+                                    <span className='pl-3'>{exampleContext ? exampleContext.username : user.username}</span>
                                     <MenuItem><p className='text-black mt-2'>My Visualizations</p></MenuItem>
                                     <MenuItem onClick={navigateToN1}><p className='text-black'>Temperature data and CO2 concentrations</p></MenuItem>
                                     <MenuItem onClick={navigateToN2}><p className='text-black '>Emission sources</p></MenuItem>
                                     <MenuItem onClick={navigateToNewVisuals}><p className='text-black'>Create new visualization</p></MenuItem>
-                                    <MenuItem onClick={LogoutButton}><p className='text-black'>Log out</p></MenuItem>
+                                    <MenuItem onClick={LogoutButton} data-testid="logout-btn"><p className='text-black'>Log out</p></MenuItem>
                                     <MenuItem onClick={deleteUser}><p className='text-red-700'>Delete account</p></MenuItem>
                                 </MenuList>
                             </Menu>
@@ -139,6 +146,15 @@ const Navbar = () => {
                         <Button variant="gradient" > <Link to="N2">Register</Link></Button>
                     </div>
                 }
+
+
+
+
+
+
+
+
+
             </div>
         </div>
     )
