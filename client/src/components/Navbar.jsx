@@ -56,18 +56,16 @@ const Navbar = ({ deleteMockFunction, exampleContext }) => {
                 {
                     label: 'Yes',
                     onClick: () => {
-                        const params = new URLSearchParams()
-                        params.append('userID', user.userId)                                                       //Code for delete user
+                                                                                       //Code for delete user
 
                         const config = {
                             headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded',
                                 'Authorization': `Basic ${user.token}`
 
                             }
                         }
 
-                        axios.post(process.env.REACT_APP_REQUEST_URL + "deleteuser", params, config)
+                        axios.delete(process.env.REACT_APP_REQUEST_URL + "deleteuser/" + user.userId, config)
                             .then((result) => {
                                 console.log(result.data)
                                 if (result.data) {
