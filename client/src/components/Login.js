@@ -57,7 +57,8 @@ const Login = ({ onSubmitForTest }) => {
                     setErrorMessage(result.data)
                 }
             }).catch((e) => {
-                setErrorMessage("Ungaught error")
+                console.log(e)
+                setErrorMessage(e.response.data)
             })
 
     }
