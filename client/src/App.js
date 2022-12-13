@@ -20,17 +20,15 @@ function App() {
   let authRoutes = <>
     <Route path="/" element={<Login />} />
     <Route path="/register" element={<Register />} />
-    <Route path="/CreateNewVisualization" element={<CreateNewVisualization />} />
-    <Route path='/N1' element={<N1 />} />
-    <Route path='/N2' element={<N2 />} />
   </>
 
   if (user?.token) {
-    authRoutes = <> <Route path="/" element={<Dashboard />} /> 
-    <Route path="/createNewVisualization" element={<CreateNewVisualization />} />
-    <Route path="/N1" element={<N1 />} />
-    <Route path="/N2" element={<N2 />} /> 
-     </>
+    authRoutes = <> <Route path="/" element={<Dashboard />} />
+      <Route path="/createNewVisualization" element={<CreateNewVisualization />} />
+      <Route path="/createNewAccount" element={<Register />} />
+      <Route path="/N1" element={<N1 />} />
+      <Route path="/N2" element={<N2 />} />
+    </>
   }
 
   return (

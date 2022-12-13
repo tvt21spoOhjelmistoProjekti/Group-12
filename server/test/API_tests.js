@@ -58,7 +58,7 @@ describe('Create user API tests', function() {
             chai.request(serverAddress)
             .post('/login/signup')
             .send({
-                username: "Tester66",
+                username: "Tester56",
                 password: "12345678",
                 fullname: "Testaaja",
                 age: 15
@@ -86,7 +86,7 @@ describe('Login API tests', function() {
             chai.request(serverAddress)
             .post('/login')
             .send({
-                username: "Tester66",
+                username: "Tester56",
                 password: "1234"
             })
             .end(function(err, res) {
@@ -100,7 +100,7 @@ describe('Login API tests', function() {
             chai.request(serverAddress)
             .post('/login')
             .send({
-                username: "Tester66",
+                username: "Tester56",
             })
             .end(function(err, res) {
                 expect(err).to.be.null;
@@ -124,7 +124,7 @@ describe('Login API tests', function() {
             chai.request(serverAddress)
             .post('/login')
             .send({
-                username: "Tester66",
+                username: "Tester56",
                 password: "12345678",
             })
             .end(function(err, res) {
@@ -145,10 +145,7 @@ describe('Delete user API tests', function() {
 
         it('should reject for no authorization', function(done){
             chai.request(serverAddress)
-            .post('/deleteuser')
-            .send({
-                'userID': testId,
-            })
+            .delete('/deleteuser/'+testId)
             .end(function(err, res) {
                 expect(err).to.be.null;
                 expect(res).to.have.status(401);
@@ -158,27 +155,19 @@ describe('Delete user API tests', function() {
 
         it('should reject for no user ID', function(done){
             chai.request(serverAddress)
-            .post('/deleteuser')
+            .delete('/deleteuser/')
             .set('Authorization', `Basic ${testAuth}`)
-            .set('Content-Type', 'application/x-www-form-urlencoded')
-            .send({
-        
-            })
             .end(function(err, res) {
                 expect(err).to.be.null;
-                expect(res).to.have.status(400);
+                expect(res).to.have.status(404);
                 done();
             })
         })
 
         it('should delete test user', function(done){
             chai.request(serverAddress)
-            .post('/deleteuser')
+            .delete('/deleteuser/' + testId)
             .set('Authorization', `Basic ${testAuth}`)
-            .set('Content-Type', 'application/x-www-form-urlencoded')
-            .send({
-                'userID': testId,
-            })
             .end(function(err, res) {
                 expect(err).to.be.null;
                 expect(res).to.have.status(200);

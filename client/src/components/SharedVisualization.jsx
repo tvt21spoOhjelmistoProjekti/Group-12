@@ -2,7 +2,7 @@ import axios from 'axios'
 import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import V1 from './charts/V1'
 import V3_V4 from './charts/V3'
 import V5 from './charts/V5'
@@ -10,8 +10,14 @@ import V6 from './charts/V6'
 import V7 from './charts/V7'
 import V8 from './charts/V8'
 import V9 from './charts/V9'
+import Navbar from './Navbar'
+import { useNavigate } from 'react-router-dom'
 
 const SharedVisualization = () => {
+
+    const navigate = useNavigate();
+
+
     const { urlParam } = useParams()
 
     const [details, setDetails] = useState([])
@@ -21,8 +27,6 @@ const SharedVisualization = () => {
     const getData = async () => {
         try {
             var response = await axios.get(process.env.REACT_APP_REQUEST_URL + "getvisualization/" + urlParam)
-            console.log(response)
-
             setDetails(response.data.details)
             let charts1 = [];
             let chartDataObj = {};
@@ -96,6 +100,9 @@ const SharedVisualization = () => {
 
         } catch (error) {
             console.log(error)
+            if (error.response.data == "wrong url") {
+                navigate('/')
+            }
         }
     }
 
@@ -104,32 +111,34 @@ const SharedVisualization = () => {
     }, [])
 
     return (
-
-        <div className='flex flex-col space-y-6 justify-center items-center bg-blue-400 p-20'>
-            <div className='rounded px-8 lg:w-2/5 flex flex-col '>
-                <div className='bg-white rounded px-8 w-full flex flex-col py-3'>
-                    <p className='font-bold text-2xl'>
-                        {details.title}
-                    </p>
-                    <p className='text-xl'>
-                        {details.description}
-                    </p>
+        <>
+            <Navbar />
+            <div className='flex flex-col space-y-6 justify-center items-center bg-blue-400 p-20'>
+                <div className='rounded px-8 lg:w-2/5 flex flex-col '>
+                    <div className='bg-white rounded px-8 w-full flex flex-col py-3'>
+                        <p className='font-bold text-2xl'>
+                            {details.title}
+                        </p>
+                        <p className='text-xl'>
+                            {details.description}
+                        </p>
+                    </div>
                 </div>
+                {details.columns == 1
+                    ?
+                    <div className={details.columns == 1 ? 'px-8 w-screen lg:w-2/5 flex flex-col space-y-8' : 'grid grid-cols-1 lg:grid-cols-2 gap-10 xl:px-20'}>
+                        {chartData}
+                    </div>
+
+                    :
+
+                    <div className='flex flex-col lg:flex-row gap-10 p-4 lg:p-24 w-screen'>
+                        <div className='w-full lg:w-1/2 flex flex-col gap-10'>{chartData} </div>
+                        <div className='w-full lg:w-1/2 flex flex-col gap-10'>{chartData2} </div>
+                    </div>
+                }
             </div>
-            {details.columns == 1
-                ?
-                <div className={details.columns == 1 ? 'px-8 w-screen lg:w-2/5 flex flex-col space-y-8' : 'grid grid-cols-1 lg:grid-cols-2 gap-10 xl:px-20'}>
-                    {chartData}
-                </div>
-
-                :
-
-                <div className='flex flex-col lg:flex-row gap-10 p-4 lg:p-24 w-screen'>
-                    <div className='w-full lg:w-1/2 flex flex-col gap-10'>{chartData} </div>
-                    <div className='w-full lg:w-1/2 flex flex-col gap-10'>{chartData2} </div>
-                </div>
-            }
-        </div>
+        </>
 
     )
 }
