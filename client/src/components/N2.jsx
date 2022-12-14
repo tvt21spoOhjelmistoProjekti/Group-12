@@ -15,7 +15,7 @@ import V9 from './charts/V9';
 
 const N2 = () => {
 
-return ( 
+return (                                                                                        //Html code for the page showing only desired charts
     <>
     <Navbar />
     <div className='bg-blue-400 p-4 xl:p-20 min-h-screen'>

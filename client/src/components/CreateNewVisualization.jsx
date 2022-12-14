@@ -20,7 +20,7 @@ const CreateNewVisualization = () => {
   const [checked, setChecked] = useState(false);
   const [checked2, setChecked2] = useState(false);
   const [checked3, setChecked3] = useState(false);
-  const [checked4, setChecked4] = useState(false);
+  const [checked4, setChecked4] = useState(false);                                      //Variables
   const [checked5, setChecked5] = useState(false);
   const [checked6, setChecked6] = useState(false);
   const [checked7, setChecked7] = useState(false);
@@ -43,7 +43,7 @@ const CreateNewVisualization = () => {
       visualstring += "V7,";
     }
     if (checked4) {
-      visualstring += "V9,";
+      visualstring += "V9,";                                              //Choosing visualizations
     }
     if (checked5) {
       visualstring += "V6,";
@@ -62,13 +62,13 @@ const CreateNewVisualization = () => {
     const params = new URLSearchParams();
     params.append("userId", user.userId);
     params.append("visualizations", visualstring.slice(0, -1));
-    params.append("title", title);
+    params.append("title", title);                                              //Adding proper data for storage
     params.append("desc", description);
     params.append("columns", columns);
 
     var config = {
       headers: {
-        Authorization: `Basic ${user.token}`,
+        Authorization: `Basic ${user.token}`,                                   //Authorization for http request
         "Content-Type": "application/x-www-form-urlencoded",
       },
     };
@@ -83,12 +83,12 @@ const CreateNewVisualization = () => {
 
     axios
       .post(
-        process.env.REACT_APP_REQUEST_URL + "visualization/create",
+        process.env.REACT_APP_REQUEST_URL + "visualization/create",                             //Sending http request to create new visualization
         params,
         config
       )
       .then((result) => {
-        if (result.data) {
+        if (result.data) {                                                        
           navigate("/visualization/" + result.data);
         }
 
@@ -97,9 +97,9 @@ const CreateNewVisualization = () => {
       .catch((e) => { });
   };
 
-  return (
-    <>
-      <Navbar />
+  return (                                                                                    //HTTP code for the page layout
+    <>                                                                                                
+      <Navbar />                                                                              
 
       <div className="bg-blue-400   xl:p-20 min-h-screen text-center ">
         <div className="mb-3  space-y-5 flex justify-center">
