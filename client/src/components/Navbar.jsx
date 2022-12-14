@@ -26,20 +26,8 @@ const Navbar = ({ deleteMockFunction, exampleContext }) => {
     ////////////////////////////////////////
     const navigate = useNavigate();
 
-    const navigateToNewVisuals = () => {
-        navigate("/CreateNewVisualization");
-    };
 
-    const navigateToN1 = () => {
-        navigate("/N1");
-    };
-
-    const navigateToN2 = () => {
-        navigate("/N2");
-    };
-
-
-    const LogoutButton = () => {                                               //Code for logout button
+    const LogoutButton = () => {                                                //Code for logout button
         localStorage.removeItem("user")
         setUser(null)
         navigate("/")
@@ -47,16 +35,18 @@ const Navbar = ({ deleteMockFunction, exampleContext }) => {
 
     const deleteUser = (e) => {
 
-        deleteMockFunction("This is clicked")
+        if (deleteMockFunction) {
+            deleteMockFunction("This is clicked")
+        }
 
         const options = {
-            title: 'Are you sure?',
+            title: 'Are you sure?',                                                                         //Delete user, including confirmation
             message: 'You really want to delete that account?',
             buttons: [
                 {
                     label: 'Yes',
                     onClick: () => {
-                                                                                       //Code for delete user
+                                                                                        
 
                         const config = {
                             headers: {
@@ -97,20 +87,20 @@ const Navbar = ({ deleteMockFunction, exampleContext }) => {
 
 
 
-    return (
+    return (                                                                                                    //HTML code for the navbar
 
         <div className='flex flex-col '>
             <div className='flex h-20 shadow-lg items-center justify-between'>
                 <h1 className='text-2xl lg:text-5xl ml-8'><Link to="/">CDV</Link></h1>
 
 
-                {user?.token || exampleContext.token ?
+                {user?.token || exampleContext?.token ?
                     <>
                         <div className='hidden space-x-8 mr-8 lg:flex'>
-                            <Button variant="gradient" > <Link to="N1">Temperature data and CO2 concentrations</Link></Button>
-                            <Button variant="gradient" > <Link to="N2">Emission sources</Link></Button>
-                            <Button variant="gradient" onClick={() => { }}>My Visualizations</Button>
-                            <Button variant="gradient" > <Link to="createNewVisualization">Create new visualization</Link></Button>
+                            <Button variant="gradient" onClick={() => navigate("/N1")} >Temperature data and CO2 concentrations</Button>
+                            <Button variant="gradient" onClick={() => navigate("/N2")}  >Emission sources</Button>
+                            <Button variant="gradient" onClick={() => navigate("/myvisuals")} >Visualizations</Button>
+                            <Button variant="gradient" onClick={() => navigate("/createNewVisualization")} >Create new visualization</Button>
                             <Menu>
                                 <MenuHandler>
                                     <Button data-testid="menu-btn" className='flex justify-center items-center'>{exampleContext ? exampleContext.fullname : user.fullname} <FaBars className='text-2xl ml-4' /></Button>
@@ -130,10 +120,10 @@ const Navbar = ({ deleteMockFunction, exampleContext }) => {
                                 </MenuHandler>
                                 <MenuList>
                                     <span className='pl-3'>{exampleContext ? exampleContext.username : user.username}</span>
-                                    <MenuItem><p className='text-black mt-2'>My Visualizations</p></MenuItem>
-                                    <MenuItem onClick={navigateToN1}><p className='text-black'>Temperature data and CO2 concentrations</p></MenuItem>
-                                    <MenuItem onClick={navigateToN2}><p className='text-black '>Emission sources</p></MenuItem>
-                                    <MenuItem onClick={navigateToNewVisuals}><p className='text-black'>Create new visualization</p></MenuItem>
+                                    <MenuItem onClick={() => navigate("/myvisuals")}><p className='text-black mt-2'>My Visualizations</p></MenuItem>
+                                    <MenuItem onClick={() => navigate("/N1")}><p className='text-black'>Temperature data and CO2 concentrations</p></MenuItem>
+                                    <MenuItem onClick={() => navigate("/N2")}><p className='text-black '>Emission sources</p></MenuItem>
+                                    <MenuItem onClick={() => navigate("/createNewVisualization")}><p className='text-black'>Create new visualization</p></MenuItem>
                                     <MenuItem onClick={LogoutButton} data-testid="logout-btn"><p className='text-black'>Log out</p></MenuItem>
                                     <MenuItem onClick={deleteUser}><p className='text-red-700'>Delete account</p></MenuItem>
                                 </MenuList>
@@ -142,8 +132,8 @@ const Navbar = ({ deleteMockFunction, exampleContext }) => {
                     </>
                     :
                     <div className='flex gap-5 pr-5'>
-                        <Button variant="gradient" > <Link to="N1">Login</Link></Button>
-                        <Button variant="gradient" > <Link to="N2">Register</Link></Button>
+                        <Link to="/"><Button variant="gradient" >Login</Button></Link>
+                        <Link to="/register"><Button variant="gradient" >Register</Button></Link>
                     </div>
                 }
 

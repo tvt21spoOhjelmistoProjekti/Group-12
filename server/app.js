@@ -8,6 +8,7 @@ const port = process.env.PORT || 3000;
 
 const jwt = require('jsonwebtoken');
 
+// import all routes
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/loginSignup');
 var deleteuserRouter = require('./routes/deleteuser');
@@ -27,11 +28,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-
+// all public endpoints
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/getvisualization', getVisualizations);
-app.use(authenticateToken);
+app.use(authenticateToken);    // below that line you need to have bearer token to access to these endpoints
 app.use('/visualization', visualization);
 app.use('/chart', chartData);
 app.use('/deleteuser', deleteuserRouter);
@@ -41,7 +42,7 @@ app.listen(port, () => {
 })
 
 
-
+// check token
 function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   console.log(authHeader)

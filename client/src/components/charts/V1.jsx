@@ -7,10 +7,10 @@ import { UserContext } from '../../context/UserContext';
 
 const optionalDesc = "Northern Hemisphere temperature reconstruction for the 1-1979 years by combining low-resolution proxies with tree-ring data, using a wavelet transform technique to achieve timescale-dependent processing of the data.";
 
-const V1 = ({ v1Data, v2Data }) => {
+const V1 = ({ v1Data, v2Data, test }) => {
 
     const [tableData, setTableData] = useState(null)
-    const [options, setOptions] = useState(null)
+    const [options, setOptions] = useState(null)                                                    //Declaring variables
     const [detailsV1, setDetailsV1] = useState(null)
     const [detailsV2, setDetailsV2] = useState(null)
 
@@ -29,16 +29,16 @@ const V1 = ({ v1Data, v2Data }) => {
             if (!v1Data && !v2Data) {
                 var config = {
                     headers: {
-                        'Authorization': `Basic ${user.token}`
+                        'Authorization': `Basic ${user.token}`                      // user authorization
                     }
                 }
-                response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V1", config);
+                response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V1", config);                     //Getting responses for v1 and v2 data from database
                 response2 = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V2", config);
             } else {
                 response.data = v1Data;
                 response2.data = v2Data
             }
-            setDetailsV1(response.data.filter(d => d.description || d.SourceLink || d.SourceLinkUrl).map(d => ({ desc: d.description, SourceLink: d.SourceLink, SourceLinkUrl: d.SourceLinkUrl })))
+            setDetailsV1(response.data.filter(d => d.description || d.SourceLink || d.SourceLinkUrl).map(d => ({ desc: d.description, SourceLink: d.SourceLink, SourceLinkUrl: d.SourceLinkUrl })))                 //Filtering data to fit chart
             setDetailsV2(response2.data.filter(d => d.description || d.SourceLink || d.SourceLinkUrl).map(d => ({ desc: d.description, SourceLink: d.SourceLink, SourceLinkUrl: d.SourceLinkUrl })))
             setTableData({
                 datasets: [
@@ -50,7 +50,7 @@ const V1 = ({ v1Data, v2Data }) => {
 
                         parsing: {
                             xAxisKey: "time",
-                            yAxisKey: "value",
+                            yAxisKey: "value",                                                                  //Setting up 7 datasets total for chart
                         },
                         pointRadius: 0,
                         borderWidth: 0.9,
@@ -153,7 +153,7 @@ const V1 = ({ v1Data, v2Data }) => {
                 interaction: {
                     intersect: false,
                 },
-                stacked: false,
+                stacked: false,                                                         //Chart options
                 plugins: {
                     legend: {
                         position: "top",
@@ -198,13 +198,14 @@ const V1 = ({ v1Data, v2Data }) => {
     useEffect(() => {
         getData(v1Data, v2Data)
 
-    }, [])
+    }, [v1Data, v2Data])
 
 
     if (tableData) {
 
         return (
-            <>{tableData &&
+
+            <>{tableData &&                                                                                             //HTML code to return
                 <div>
                     <div className='min-h-[700px]'>
                         <Line options={options} data={tableData} />
@@ -215,7 +216,7 @@ const V1 = ({ v1Data, v2Data }) => {
                         <h1> <p className="font-bold">{"(Optional data)"}</p> {showMore ? detailsV2[0].desc : `${detailsV2[0].desc.substring(0, 100)}`}</h1>
 
                         <div className={showMore ? 'flex' : 'hidden'}>
-                            <ul className='mt-3 list-disc'>
+                            <ul className='mt-3 list-disc'>                                                                                 
                                 <label className='font-semibold'>Sources</label>
 
                                 {detailsV1.map((data, index) => {
@@ -239,12 +240,12 @@ const V1 = ({ v1Data, v2Data }) => {
 
                         <h1 onClick={() => setShowMore(!showMore)} className='cursor-pointer text-blue-500 mt-3'>{showMore ? "Show Less" : " Show More"}</h1>
                     </div>
-                </div>} </>
+                </div> }</>
         )
     }
 
-    return (
-        <div className='flex justify-center items-center'>
+    return (                                                                                    //Loading icon
+        <div className='flex justify-center items-center'>                                                              
             <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" />
         </div>
     )

@@ -25,7 +25,7 @@ const Dashboard = () => {
     const { user, setUser } = useContext(UserContext)
 
 
-    return (
+    return (                                                                                //HTTP code for main page including grid for charts
         <>
             <Navbar />
             <div className='bg-blue-400 p-4 xl:p-20 min-h-screen'>
@@ -46,7 +46,6 @@ const Dashboard = () => {
                     </div>
 
                     <div className='w-full lg:w-1/2 flex flex-col gap-10'>
-
                         <div className='w-full bg-white rounded shadow-xl '>
                             <V6 />
                         </div>

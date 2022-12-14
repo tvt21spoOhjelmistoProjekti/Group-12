@@ -11,6 +11,10 @@ const V6 = ({ V6Data }) => {
 
     const [tableData, setTableData] = useState(null)
     const { user, setUser } = useContext(UserContext)
+    const [description, setDescription] = useState("")
+    const [studydesc, setStudydesc] = useState("")                                                              //Variables
+    const [datasource, setDatasource] = useState("")
+
 
     const getData = async () => {
 
@@ -24,16 +28,20 @@ const V6 = ({ V6Data }) => {
                         'Authorization': `Basic ${user.token}`
                     }
                 }
-                response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V6", config)
+                response = await axios.get(process.env.REACT_APP_REQUEST_URL + "chart/V6", config)                          //Getting data
             } else {
                 response.data = V6Data
             }
+
+            setDescription(response.data[0].description)
+            setStudydesc(response.data[0].studydesc)                                                                //Setting description and links
+            setDatasource(response.data[0].datasource)
 
 
             setTableData({
                 datasets: [
                     {
-                        label: "CO2 Concentration Data",
+                        label: "CO2 Concentration Data",                                                                            //Setting datasets
                         data: response.data.map(d => ({ xAxis: d.Calendar_years_BP, value: d.CO2_concentration })),
                         borderColor: "#2CCCE4",
                         backgroundColor: "#A4DD00",
@@ -45,19 +53,8 @@ const V6 = ({ V6Data }) => {
                         },
                         pointRadius: 0,
 
-                    },
-                    {
-                        label: "CO2 Concentration Sigma Mean Data",
-                        data: response.data.map(d => ({ xAxis: d.Calendar_years_BP, value: d.concentration_sigma_mean })),
-                        borderColor: '#FF9800',
-                        borderWidth: 1,
-                        backgroundColor: "#9F0500",
-                        parsing: {
-                            xAxisKey: "xAxis",
-                            yAxisKey: "value",
-                        },
-                        pointRadius: 0,
-                    },
+                    }
+
                 ],
             })
         } catch (error) {
@@ -70,15 +67,15 @@ const V6 = ({ V6Data }) => {
     }, [])
 
     const options = {
+        maintainAspectRatio: false,
         responsive: true,
         interaction: {
-            mode: 'index',
-            intersect: false,
+            intersect: false,                                                   //Chart options
         },
         stacked: false,
         plugins: {
             legend: {
-                position: "top",
+                position: "top"
 
             },
             title: {
@@ -89,28 +86,32 @@ const V6 = ({ V6Data }) => {
         scales: {
             x: {
                 type: "linear",
-                min: -60,
-                max: 806000
+                min: -900,
+                max: 806000,
+                reverse: "true"
             },
             yAxis: {
-                type: "logarithmic",
+                type: "linear",
+                min: 150,
+                max: 400
             },
         },
     };
 
     if (tableData) {
 
-        return (
-            <div className='max-w-[1000px]'><Line options={options} data={tableData} />
+        return (                                                                                                //Return HTML code
+            <div >
+                <div className='min-h-[600px] max-h-[600px]'>
+                    <Line options={options} data={tableData} />
+                </div>
                 <div className='pt-2 px-3 text-justify'>
-                    <p>Revised EPICA Dome C and Antarctic composite ice core atmospheric CO2 data. This new version of CO2 composite
-                        replaces the old version of Luthi et al. (2008), which contains the analytical bias described in Bereiter et al. 2015
-                        and lower quality data in other sections.</p>
-                    <div className='pt-5 font-bold font-sans text-orange-400'>
-                        <a href='https://www.ncei.noaa.gov/access/paleo-search/study/17975'>Study description</a>
+                    <p>{description}</p>
+                    <div className='pt-5 font-bold font-sans text-blue-500'>
+                        <a href={studydesc}>Study description</a>
                     </div>
-                    <div className='pt-5 font-bold font-sans text-orange-400'>
-                        <a href='https://www.ncei.noaa.gov/pub/data/paleo/icecore/antarctica/antarctica2015co2composite.txt'>Data source</a>
+                    <div className='pt-5 font-bold font-sans text-blue-500'>
+                        <a href={datasource}>Data source</a>
                     </div>
                 </div>
             </div>

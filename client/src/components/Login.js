@@ -8,7 +8,7 @@ import axios from 'axios';
 
 
 const Login = ({ onSubmitForTest }) => {
-    const [username, setUsername] = useState("");
+    const [username, setUsername] = useState("");                                                           //Variables
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
@@ -27,7 +27,7 @@ const Login = ({ onSubmitForTest }) => {
         }
 
 
-        const params = new URLSearchParams()
+        const params = new URLSearchParams()                                            //Setting login parameters
         params.append('username', username)
         params.append('password', password)
 
@@ -39,7 +39,7 @@ const Login = ({ onSubmitForTest }) => {
 
         axios.post(process.env.REACT_APP_REQUEST_URL + "login", params, config)
             .then((result) => {
-                if (result.data.token) {
+                if (result.data.token) {                                                                //Login request
 
                     const user = {
                         status: "logged_in",
@@ -50,19 +50,21 @@ const Login = ({ onSubmitForTest }) => {
                     }
 
                     setUser(user)
-                    localStorage.setItem("user", JSON.stringify(user))
+                    localStorage.setItem("user", JSON.stringify(user))                                          //Setting logged in user and navigating to the first page
                     navigate("/")
                 } else {
 
                     setErrorMessage(result.data)
                 }
             }).catch((e) => {
-                setErrorMessage("Ungaught error")
+                if (e.response?.data) {
+                    setErrorMessage(e.response.data)
+                }
             })
 
     }
 
-    return (
+    return (                                                                                                        //HTTP code for the page
         <div className='flex min-h-screen bg-bg-bear bg-cover items-center w-full h-full lg:pl-[300px]'>
             <div className='flex-1 lg:flex-none flex justify-center items-center h-screen'>
                 <div className='flex flex-col justify-center items-center px-24 bg-white bg-opacity-70 w-screen lg:w-auto h-full lg:h-3/4 lg:rounded-3xl shadow-xl'>

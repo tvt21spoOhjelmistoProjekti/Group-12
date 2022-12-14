@@ -20,13 +20,13 @@ const SharedVisualization = () => {
 
     const { urlParam } = useParams()
 
-    const [details, setDetails] = useState([])
+    const [details, setDetails] = useState([])                                      //Variables
     const [chartData, setChartData] = useState([])
     const [chartData2, setChartData2] = useState([])
 
     const getData = async () => {
         try {
-            var response = await axios.get(process.env.REACT_APP_REQUEST_URL + "getvisualization/" + urlParam)
+            var response = await axios.get(process.env.REACT_APP_REQUEST_URL + "getvisualization/" + urlParam)              //Request to get the desired visualization
             setDetails(response.data.details)
             let charts1 = [];
             let chartDataObj = {};
@@ -53,7 +53,7 @@ const SharedVisualization = () => {
             }
             if (response.data?.V5_Data) {
                 if (response.data.details.columns == 2 && counter % 2 === 0) {
-                    charts2 = [...charts2, <div className='bg-white rounded shadow-2xl'> <V5 V5_Data={response.data.V5_Data} /></div>]
+                    charts2 = [...charts2, <div className='bg-white rounded shadow-2xl'> <V5 V5_Data={response.data.V5_Data} /></div>]                              //Based on database response, deciding which data is shown
                 } else {
                     charts1 = [...charts1, <div className='bg-white rounded shadow-2xl'> <V5 V5_Data={response.data.V5_Data} /></div>]
                 }
@@ -100,7 +100,7 @@ const SharedVisualization = () => {
 
         } catch (error) {
             console.log(error)
-            if (error.response.data == "wrong url") {
+            if (error.response.data == "wrong url") {                                                       //In case of error
                 navigate('/')
             }
         }
@@ -110,7 +110,7 @@ const SharedVisualization = () => {
         getData()
     }, [])
 
-    return (
+    return (                                                //HTML code for the page
         <>
             <Navbar />
             <div className='flex flex-col space-y-6 justify-center items-center bg-blue-400 p-20'>
