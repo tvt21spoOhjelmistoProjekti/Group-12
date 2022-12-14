@@ -21,6 +21,8 @@ Projektissa front-end on tehty käytettäen react.js frameworkkia. React on fram
 Projektissa oli mukana Antti-jussi Virrankari  ([AJhosuja](https://github.com/AJHosuja)), Ville Similä ([w526](https://github.com/w526)), Joonatan Yrjänä ([Jonkkuu](https://github.com/Jonkkuu)) ja Heikki Pätsi ([heikkipatsi](https://github.com/heikkipatsi)) Projektissa ei ollut erityisesti rooleja kenelläkään, vaan ryhmän tehtävät jaettiin aina tiimin kanssa sen mukaan, mitä seuraavaksi tulisi tehdä.
 ### Dokumentit
 [Rajapintakuvaus](https://www.postman.com/bold-spaceship-457222/workspace/group12/request/19438709-1bcdcd65-5e2f-4dd1-83cd-9172040adf6d)  
+Database model  
+<img src="https://user-images.githubusercontent.com/99876629/207570689-38fe93d6-643c-4559-a4cc-0ce24852c58e.jpeg"  width="400"/>  
 Kuvissa sovelluksen ulkoasusuunnitelma, joka tehtiin ennen projektin aloitusta.  
 <img src="https://user-images.githubusercontent.com/99876629/207303973-8f74c7a4-19b7-433f-90ea-0b6b01d4d4f2.png"  width="400"/>
 <img src="https://user-images.githubusercontent.com/99876629/207304033-12756ba2-a039-4d33-b14f-8b57fb35f9bc.png"  width="400" />
