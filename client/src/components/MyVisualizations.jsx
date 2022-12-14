@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../context/UserContext";                                   //Imports
 import Navbar from "./Navbar";
 import { useState } from "react";
 import { confirmAlert } from 'react-confirm-alert';
@@ -13,7 +13,7 @@ import { Navigate, useParams } from 'react-router-dom'
 const MyVisualizations = () => {
     const navigate = useNavigate();
 
-    const { user, setUser } = useContext(UserContext)
+    const { user, setUser } = useContext(UserContext)                                           //Variables
     const [visualData, setVisualData] = useState([])
 
     const getData = async () => {
@@ -24,7 +24,7 @@ const MyVisualizations = () => {
                     'Authorization': `Basic ${user.token}`   // user authorization
                 }
             }
-            const response = await axios.get(process.env.REACT_APP_REQUEST_URL + "visualization/myvisual/" + user.userId, config)
+            const response = await axios.get(process.env.REACT_APP_REQUEST_URL + "visualization/myvisual/" + user.userId, config)                       //Getting response data for user's visualizations
             setVisualData(response.data)
         }
         catch (error) {
@@ -34,7 +34,7 @@ const MyVisualizations = () => {
 
     const deleteMyVisualizations = (e, urlToDelete) => {
         e.preventDefault()
-        console.log("here")
+        console.log("here")                                                                     //Key to delete visualizations
         const options = {
             title: 'Are you sure?',
             message: 'You really want to delete this visualization?',
@@ -68,7 +68,7 @@ const MyVisualizations = () => {
                     onClick: () => { }
                 }
             ],
-            closeOnEscape: true,
+            closeOnEscape: true,                                                            //Popup confirmation
             closeOnClickOutside: true,
             keyCodeForClose: [8, 32],
             willUnmount: () => { },
@@ -88,7 +88,7 @@ const MyVisualizations = () => {
         getData()
     }, [])
 
-    return (
+    return (                                                                    //Page HTML code
         <>
             <Navbar />
             <div className='bg-blue-400 p-4 xl:p-10 min-h-screen space-y-5'>
@@ -137,7 +137,7 @@ const MyVisualizations = () => {
     )
 }
 
-const LinkBtn = ({ link }) => {
+const LinkBtn = ({ link }) => {                                                         //Copy link button
     const [copied, setCopied] = useState(false)
 
     return (

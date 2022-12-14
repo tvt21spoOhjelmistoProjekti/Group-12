@@ -8,7 +8,7 @@ const Register = ({ onSubmitForTest }) => {
     const { user, setUser } = useContext(UserContext)
 
     const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [password, setPassword] = useState("");                                                           //Variables
     const [fullname, setFullName] = useState("");
     const [age, setAge] = useState("")
     const navigate = useNavigate();
@@ -25,7 +25,7 @@ const Register = ({ onSubmitForTest }) => {
 
         const params = new URLSearchParams()
         params.append('username', username)
-        params.append('password', password)
+        params.append('password', password)                                                             //Parameters for registration
         params.append('fullname', fullname)
         params.append('age', age)
 
@@ -35,7 +35,7 @@ const Register = ({ onSubmitForTest }) => {
             }
         }
 
-        axios.post(process.env.REACT_APP_REQUEST_URL + "login" + "/signup", params, config)
+        axios.post(process.env.REACT_APP_REQUEST_URL + "login" + "/signup", params, config)                         //HTTP request to register
             .then((result) => {
                 if (result.data.token) {
                     const user = {
@@ -54,7 +54,7 @@ const Register = ({ onSubmitForTest }) => {
 
     }
 
-    return (
+    return (                                                                                                                        //Page html code
         <div className='flex min-h-screen bg-bg-bear bg-cover items-center w-full h-full lg:pl-[300px]'>
             <div className='flex-1 lg:flex-none flex justify-center items-center h-screen'>
                 <div className='flex flex-col justify-center items-center px-24 bg-white bg-opacity-70 w-screen lg:w-auto h-full lg:h-3/4 lg:rounded-3xl shadow-xl'>

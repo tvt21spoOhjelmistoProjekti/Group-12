@@ -40,13 +40,13 @@ const Navbar = ({ deleteMockFunction, exampleContext }) => {
         }
 
         const options = {
-            title: 'Are you sure?',
+            title: 'Are you sure?',                                                                         //Delete user, including confirmation
             message: 'You really want to delete that account?',
             buttons: [
                 {
                     label: 'Yes',
                     onClick: () => {
-                        //Code for delete user
+                                                                                        
 
                         const config = {
                             headers: {
@@ -87,7 +87,7 @@ const Navbar = ({ deleteMockFunction, exampleContext }) => {
 
 
 
-    return (
+    return (                                                                                                    //HTML code for the navbar
 
         <div className='flex flex-col '>
             <div className='flex h-20 shadow-lg items-center justify-between'>

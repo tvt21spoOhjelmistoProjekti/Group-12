@@ -25,7 +25,7 @@ const Dashboard = () => {
     const { user, setUser } = useContext(UserContext)
 
 
-    return (
+    return (                                                                                //HTTP code for main page including grid for charts
         <>
             <Navbar />
             <div className='bg-blue-400 p-4 xl:p-20 min-h-screen'>
